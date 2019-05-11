@@ -20,7 +20,7 @@
 		</sql>
 	</install>
 
-	<!-- Runs on ininstall -->
+	<!-- Runs on uninstall -->
 	<install>
 		<sql>
 			<file driver="mysql" charset="utf8">sql/uninstall/mysql/mysql.sql</file>

@@ -20,4 +20,8 @@ defined('_JEXEC') or die;
  */
 class RwController extends BaseController
 {
+    public function display($cachable = false, $urlparams = array())
+    {
+        return parent::display($cachable, $urlparams);
+    }
 }
