@@ -6,7 +6,9 @@ class RwHelper
 	public function addSubmenu($vName)
 	{
 		JHtmlSidebar::addEntry(JText::sprintf('COM_RW'), "index.php?option=com_rw&view=rw", $vName == 'rw');
-		JHtmlSidebar::addEntry(JText::sprintf('COM_RW_MENU_COUNTRIES'), "index.php?option=com_rw&view=countries", $vName == 'countries');
+        JHtmlSidebar::addEntry(JText::sprintf('COM_RW_MENU_STATIONS'), "index.php?option=com_rw&view=stations", $vName == 'stations');
+        JHtmlSidebar::addEntry(JText::sprintf('COM_RW_MENU_REGIONS'), "index.php?option=com_rw&view=regions", $vName == 'regions');
+        JHtmlSidebar::addEntry(JText::sprintf('COM_RW_MENU_COUNTRIES'), "index.php?option=com_rw&view=countries", $vName == 'countries');
 	}
 
     /**
