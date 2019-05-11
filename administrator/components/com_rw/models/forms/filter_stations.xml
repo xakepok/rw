@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addrulepath="/administrator/components/com_rw/models/rules">
+    <fields name="filter">
+        <field
+                name="search"
+                type="text"
+                label="COM_RW_FILTER_STATION_ESR_YANDEX_NAME"
+                description="COM_RW_FILTER_STATION_ESR_YANDEX_NAME"
+                hint="COM_RW_FILTER_STATION_ESR_YANDEX_NAME"
+                autocomplete="off"
+                class="js-stools-search-string"
+        />
+        <field
+                name="region"
+                type="Region"
+                label="COM_RW_FILTER_SELECT_REGION"
+                description="COM_RW_FILTER_SELECT_REGION"
+                hint="COM_RW_FILTER_SELECT_REGION"
+                autocomplete="off"
+                onchange="this.form.submit();"
+                class="js-stools-search-string">
+            <option value="">COM_RW_FILTER_SELECT_REGION</option>
+        </field>
+        <field
+                name="country"
+                type="Country"
+                label="COM_RW_FILTER_SELECT_COUNTRY"
+                description="COM_RW_FILTER_SELECT_COUNTRY"
+                hint="COM_RW_FILTER_SELECT_COUNTRY"
+                autocomplete="off"
+                onchange="this.form.submit();"
+                class="js-stools-search-string">
+            <option value="">COM_RW_FILTER_SELECT_COUNTRY</option>
+        </field>
+    </fields>
+    <fields name="list">
+        <field
+                name="fullordering"
+                type="list"
+                label="COM_RW_FILTER_SELECT_FULL_ORDERING"
+                description="COM_RW_FILTER_SELECT_FULL_ORDERING_DESC"
+                onchange="this.form.submit();"
+                default="yandex ASC"
+                >
+            <option value="">JGLOBAL_SORT_BY</option>
+            <option value="station ASC">COM_RW_SORT_STATION_ASC</option>
+            <option value="station DESC">COM_RW_SORT_STATION_DESC</option>
+            <option value="region ASC">COM_RW_SORT_REGION_ASC</option>
+            <option value="region DESC">COM_RW_SORT_REGION_DESC</option>
+            <option value="country ASC">COM_RW_SORT_COUNTRY_ASC</option>
+            <option value="country DESC">COM_RW_SORT_COUNTRY_DESC</option>
+            <option value="yandex ASC">COM_RW_SORT_YANDEX_ASC</option>
+            <option value="yandex DESC">COM_RW_SORT_YANDEX_DESC</option>
+            <option value="esr ASC">COM_RW_SORT_ESR_ASC</option>
+            <option value="esr DESC">COM_RW_SORT_ESR_DESC</option>
+            <option value="s.id ASC">COM_RW_SORT_ID_ASC</option>
+            <option value="s.id DESC">COM_RW_SORT_ID_DESC</option>
+        </field>
+        <field
+                name="limit"
+                type="limitbox"
+                class="input-mini"
+                default="0"
+                label="COM_RW_FILTER_SELECT_LIMIT"
+                description="COM_RW_FILTER_SELECT_LIMIT_DESC"
+                onchange="this.form.submit();"
+        />
+    </fields>
+</form>
