@@ -9,7 +9,7 @@
                 name="title"
                 type="text"
                 label="COM_RW_FORM_TITLE"
-                description="COM_RW_FORM_TITLE_REGION_DESC"
+                description="COM_RW_FORM_REGION_DESC"
                 required="true"
                 autocomplete="off"
         />
@@ -17,7 +17,7 @@
                 name="countryID"
                 type="Country"
                 label="COM_RW_FORM_COUNTRY"
-                description="COM_RW_FORM_TITLE_COUNTRY_DESC"
+                description="COM_RW_FORM_COUNTRY_DESC"
                 autocomplete="off"
                 required="true"
                 class="js-stools-search-string"

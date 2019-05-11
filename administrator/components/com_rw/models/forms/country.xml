@@ -9,7 +9,7 @@
                 name="title"
                 type="text"
                 label="COM_RW_FORM_TITLE"
-                description="COM_RW_FORM_TITLE_DESC"
+                description="COM_RW_FORM_COUNTRY_DESC"
                 required="true"
                 autocomplete="off"
         />

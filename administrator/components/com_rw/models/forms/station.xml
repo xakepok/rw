@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addrulepath="/administrator/components/com_rw/models/rules">
+    <fieldset name="general">
+        <field
+                name="id"
+                type="hidden"
+        />
+        <field
+                name="title"
+                type="text"
+                label="COM_RW_FORM_TITLE"
+                description="COM_RW_FORM_STATION_DESC"
+                required="true"
+                autocomplete="off"
+        />
+        <field
+                name="regionID"
+                type="Region"
+                label="COM_RW_FORM_REGION"
+                description="COM_RW_FORM_REGION_DESC"
+                autocomplete="off"
+                required="true"
+                class="js-stools-search-string"
+        />
+        <field
+                name="yandex"
+                type="number"
+                label="COM_RW_FORM_YANDEX"
+                description="COM_RW_FORM_YANDEX_DESC"
+                required="true"
+                autocomplete="off"
+        />
+        <field
+                name="esr"
+                type="number"
+                label="COM_RW_FORM_ESR"
+                description="COM_RW_FORM_ESR_DESC"
+                required="true"
+                autocomplete="off"
+        />
+    </fieldset>
+</form>
