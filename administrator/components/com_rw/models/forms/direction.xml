@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addrulepath="/administrator/components/com_rw/models/rules">
+    <fieldset name="general">
+        <field
+                name="id"
+                type="hidden"
+        />
+        <field
+                name="title"
+                type="text"
+                label="COM_RW_FORM_TITLE"
+                description="COM_RW_FORM_COUNTRY_DESC"
+                required="true"
+                autocomplete="off"
+        />
+        <field
+                name="parity"
+                type="list"
+                label="COM_RW_FORM_PARITY"
+                description="COM_RW_FORM_PARITY_DESC"
+                required="true"
+                default="0"
+                >
+            <option value="0">COM_RW_FORM_PARITY_0</option>
+            <option value="1">COM_RW_FORM_PARITY_1</option>
+        </field>
+        <field
+                name="color"
+                type="color"
+                label="COM_RW_FORM_BACKGROUND"
+                description="COM_RW_FORM_BACKGROUND_DESC"
+                required="true"
+        />
+        <field
+                name="font"
+                type="color"
+                label="COM_RW_FORM_FONT_COLOR"
+                description="COM_RW_FORM_FONT_COLOR_DESC"
+                required="true"
+        />
+    </fieldset>
+    <fieldset name="info">
+        <field
+                name="is_cocon"
+                type="list"
+                label="COM_RW_FORM_IS_COCON"
+                description="COM_RW_FORM_IS_COCON_DESC"
+                required="true"
+                default="0"
+        >
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field
+                name="info"
+                type="editor"
+                filter="safehtml"
+                format="raw"
+                label="COM_RW_FORM_DIRECTION_INFO"
+                description="COM_RW_FORM_DIRECTION_INFO_DESC"
+        />
+    </fieldset>
+</form>

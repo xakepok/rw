@@ -10,7 +10,7 @@ HTMLHelper::_('stylesheet', 'com_projects/style.css', array('version' => 'auto',
 ?>
 <script type="text/javascript">
     Joomla.submitbutton = function (task) {
-        if (task === 'station.cancel' || document.formvalidator.isValid(document.id('adminForm'))) {*/
+        if (task === 'direction.cancel' || document.formvalidator.isValid(document.id('adminForm'))) {*/
             Joomla.submitform(task, document.getElementById('adminForm'));
         }
     }
@@ -21,11 +21,20 @@ HTMLHelper::_('stylesheet', 'com_projects/style.css', array('version' => 'auto',
         <div class="span12 form-horizontal">
             <?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'general')); ?>
             <div class="tab-content">
-                <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'general', JText::sprintf('COM_RW_BLANK_STATION_BASE')); ?>
+                <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'general', JText::sprintf('COM_RW_BLANK_DIRECTION_BASE')); ?>
                 <div class="row-fluid">
                     <div class="span12">
                         <div>
                             <?php echo $this->loadTemplate('general'); ?>
+                        </div>
+                    </div>
+                </div>
+                <?php echo JHtml::_('bootstrap.endTab'); ?>
+                <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'info', JText::sprintf('COM_RW_BLANK_DIRECTION_INFO')); ?>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div>
+                            <?php echo $this->loadTemplate('info'); ?>
                         </div>
                     </div>
                 </div>
