@@ -38,5 +38,36 @@
                 required="true"
                 autocomplete="off"
         />
+        <field
+                name="express"
+                type="number"
+                label="COM_RW_FORM_EXPRESS"
+                description="COM_RW_FORM_EXPRESS_DESC"
+                autocomplete="off"
+        />
+        <field
+                name="lt"
+                type="text"
+                label="COM_RW_FORM_LT"
+                description="COM_RW_FORM_LT_DESC"
+                autocomplete="off"
+        />
+        <field
+                name="lg"
+                type="text"
+                label="COM_RW_FORM_LG"
+                description="COM_RW_FORM_LG_DESC"
+                autocomplete="off"
+        />
+    </fieldset>
+    <fieldset name="info">
+        <field
+                name="detour"
+                type="editor"
+                filter="safehtml"
+                format="raw"
+                label="COM_RW_FORM_STATION_INFO"
+                description="COM_RW_FORM_STATION_INFO_DESC"
+        />
     </fieldset>
 </form>
