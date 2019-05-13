@@ -17,6 +17,15 @@ foreach ($this->items as $i => $item) :
             <?php echo $item['esr'];?>
         </td>
         <td>
+            <?php echo $item['express'];?>
+        </td>
+        <td>
+            <?php echo $item['directions'];?>
+        </td>
+        <td>
+            <?php echo $item['turnstiles'];?>
+        </td>
+        <td>
             <?php echo $item['region'];?>
         </td>
         <td>

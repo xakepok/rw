@@ -60,7 +60,16 @@
                 autocomplete="off"
         />
     </fieldset>
-    <fieldset name="info">
+    <fieldset name="turnstiles">
+        <field
+                name="turnstiles"
+                type="Turnstiles"
+                label="COM_RW_FORM_TURNSTILES"
+                description="COM_RW_FORM_TURNSTILES_DESC"
+                default=""
+        >
+                <option value="">COM_RW_FORM_TURNSTILES_NOT_SETUP</option>
+        </field>
         <field
                 name="detour"
                 type="editor"

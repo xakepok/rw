@@ -48,7 +48,7 @@ class RwModelStation extends AdminModel {
 
     protected function prepareTable($table)
     {
-        $nulls = array(); //Поля, которые NULL
+        $nulls = array('detour', 'turnstiles'); //Поля, которые NULL
         foreach ($nulls as $field)
         {
             if (!strlen($table->$field)) $table->$field = NULL;

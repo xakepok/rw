@@ -11,6 +11,11 @@ class TableRwStations extends Table
     var $title = null;
     var $yandex = null;
     var $esr = null;
+    var $express = null;
+    var $lt = null;
+    var $lg = null;
+    var $detour = null;
+    var $turnstiles = null;
 
     public function __construct(JDatabaseDriver $db)
     {

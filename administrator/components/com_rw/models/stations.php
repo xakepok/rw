@@ -10,7 +10,7 @@ class RwModelStations extends ListModel
         if (empty($config['filter_fields']))
         {
             $config['filter_fields'] = array(
-                's.id', 'country', 'region', 'search', 'esr', 'yandex',
+                's.id', 'country', 'region', 'search', 'esr', 'yandex', 'express', 'turnstiles', 'direction',
             );
         }
         parent::__construct($config);
@@ -21,13 +21,16 @@ class RwModelStations extends ListModel
         $db =& $this->getDbo();
         $query = $db->getQuery(true);
         $query
-            ->select("`s`.`id`, `s`.`title` as`station`, `s`.`regionID`, `s`.`yandex`")
+            ->select("`s`.`id`, `s`.`title` as`station`, `s`.`regionID`, `s`.`yandex`, `s`.`esr`, `s`.`express`, IF(`s`.`turnstiles` is null, 0, 1) as `turnstiles`")
             ->select("CASE LENGTH(`s`.`esr`) WHEN 3 THEN CONCAT('000',`s`.`esr`) WHEN 4 THEN CONCAT('00',`s`.`esr`) WHEN 5 THEN CONCAT('0',`s`.`esr`) WHEN 6 THEN `s`.`esr` END as `esr`")
+            ->select("`d`.`title` as `direction`")
             ->select("`r`.`countryID`, `r`.`title` as `region`")
             ->select("`c`.`title` as `country`")
             ->from("`#__rw_stations` as `s`")
             ->leftJoin("`#__rw_regions` as `r` on `r`.`id` = `s`.`regionID`")
-            ->leftJoin("`#__rw_countries` as `c` on `c`.`id` = `r`.`countryID`");
+            ->leftJoin("`#__rw_countries` as `c` on `c`.`id` = `r`.`countryID`")
+            ->leftJoin("`#__rw_station_directions` as `di` on `di`.`stationID` = `s`.`id`")
+            ->leftJoin("`#__rw_directions` as `d` on `d`.`id` = `di`.`directionID`");
 
         /* Фильтр */
         $search = $this->getState('filter.search');
@@ -40,6 +43,22 @@ class RwModelStations extends ListModel
         if (is_numeric($region)) {
             $region = $db->q($region);
             $query->where("`s`.`regionID` = {$region}");
+        }
+        //Фильтр по направлению
+        $direction = $this->getState('filter.direction');
+        if (is_numeric($direction)) {
+            $direction = $db->q($direction);
+            $query->where("`d`.`id` = {$direction}");
+        }
+        //Фильтр по наличию турникетов
+        $turnstiles = $this->getState('filter.turnstiles');
+        if (is_numeric($turnstiles)) {
+            if ($turnstiles == 0) {
+                $query->where("`s`.`turnstiles` is null");
+            }
+            else {
+                $query->where("`s`.`turnstiles`is not null");
+            }
         }
 
         /* Сортировка */
@@ -64,9 +83,33 @@ class RwModelStations extends ListModel
             $arr['region'] = $item->region;
             $arr['esr'] = $item->esr;
             $arr['yandex'] = $item->yandex;
-            $result[] = $arr;
+            $arr['express'] = ($item->express == '0') ? JText::sprintf('COM_RW_NO_INFO') : $item->express;
+            $arr['turnstiles'] = JText::sprintf(($item->turnstiles != '0') ? 'JYES' : 'JNO');
+            $arr['directions'][] = $item->direction;
+            if (!isset($result[$item->id])) {
+                $result[$item->id] = $arr;
+            }
+            else {
+                $result[$item->id]['directions'][] = $item->direction;
+            }
         }
+        if (!empty($items)) $result = $this->getDirections($result ?? array());
         return $result;
+    }
+
+    /**
+     * @param array $items массив с результатами запроса
+     * @return array
+     * @since 1.0.0.4
+     */
+    private function getDirections(array $items): array
+    {
+        if (empty($items)) return $items;
+        foreach ($items as $id => $item) {
+            $directions = implode(", ", $items[$id]['directions']);
+            $items[$id]['directions'] = $directions;
+        }
+        return $items;
     }
 
     /* Сортировка по умолчанию */
@@ -75,7 +118,11 @@ class RwModelStations extends ListModel
         $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
         $this->setState('filter.search', $search);
         $region = $this->getUserStateFromRequest($this->context . '.filter.region', 'filter_region');
-        $this->setState('filter.region', $region);
+        $this->setState('filter.region', $direction);
+        $direction = $this->getUserStateFromRequest($this->context . '.filter.direction', 'filter_direction');
+        $this->setState('filter.direction', $region);
+        $turnstiles = $this->getUserStateFromRequest($this->context . '.filter.turnstiles', 'filter_turnstiles');
+        $this->setState('filter.turnstiles', $turnstiles);
         parent::populateState($ordering, $direction);
     }
 
@@ -83,6 +130,8 @@ class RwModelStations extends ListModel
     {
         $id .= ':' . $this->getState('filter.region');
         $id .= ':' . $this->getState('filter.search');
+        $id .= ':' . $this->getState('filter.direction');
+        $id .= ':' . $this->getState('filter.turnstiles');
         return parent::getStoreId($id);
     }
 }

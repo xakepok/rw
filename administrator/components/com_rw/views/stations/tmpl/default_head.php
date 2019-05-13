@@ -17,6 +17,15 @@ $listDirn    = $this->escape($this->state->get('list.direction'));
         <?php echo JHtml::_('searchtools.sort', 'COM_RW_HEAD_CODE_ESR', 'esr', $listDirn, $listOrder); ?>
     </th>
     <th>
+        <?php echo JHtml::_('searchtools.sort', 'COM_RW_HEAD_CODE_EXPRESS', 'express', $listDirn, $listOrder); ?>
+    </th>
+    <th>
+        <?php echo JHtml::_('searchtools.sort', 'COM_RW_HEAD_DIRECTIONS', 'direction', $listDirn, $listOrder); ?>
+    </th>
+    <th>
+        <?php echo JHtml::_('searchtools.sort', 'COM_RW_HEAD_TURNSTILES', 'turnstiles', $listDirn, $listOrder); ?>
+    </th>
+    <th>
         <?php echo JHtml::_('searchtools.sort', 'COM_RW_HEAD_REGION', 'region', $listDirn, $listOrder); ?>
     </th>
     <th>

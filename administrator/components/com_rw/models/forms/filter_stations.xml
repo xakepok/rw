@@ -22,15 +22,28 @@
             <option value="">COM_RW_FILTER_SELECT_REGION</option>
         </field>
         <field
-                name="country"
-                type="Country"
-                label="COM_RW_FILTER_SELECT_COUNTRY"
-                description="COM_RW_FILTER_SELECT_COUNTRY"
-                hint="COM_RW_FILTER_SELECT_COUNTRY"
+                name="direction"
+                type="Direction"
+                label="COM_RW_FILTER_SELECT_DIRECTION"
+                description="COM_RW_FILTER_SELECT_DIRECTION"
+                hint="COM_RW_FILTER_SELECT_DIRECTION"
                 autocomplete="off"
                 onchange="this.form.submit();"
                 class="js-stools-search-string">
-            <option value="">COM_RW_FILTER_SELECT_COUNTRY</option>
+            <option value="">COM_RW_FILTER_SELECT_DIRECTION</option>
+        </field>
+        <field
+                name="turnstiles"
+                type="list"
+                label="COM_RW_FILTER_SELECT_TURNSTILES"
+                description="COM_RW_FILTER_SELECT_TURNSTILES"
+                hint="COM_RW_FILTER_SELECT_TURNSTILES"
+                autocomplete="off"
+                onchange="this.form.submit();"
+                class="js-stools-search-string">
+            <option value="">COM_RW_FILTER_SELECT_TURNSTILES</option>
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
         </field>
     </fields>
     <fields name="list">
@@ -53,6 +66,12 @@
             <option value="yandex DESC">COM_RW_SORT_YANDEX_DESC</option>
             <option value="esr ASC">COM_RW_SORT_ESR_ASC</option>
             <option value="esr DESC">COM_RW_SORT_ESR_DESC</option>
+            <option value="express ASC">COM_RW_SORT_EXPRESS_ASC</option>
+            <option value="express DESC">COM_RW_SORT_EXPRESS_DESC</option>
+            <option value="turnstiles ASC">COM_RW_SORT_TURNSTILES_ASC</option>
+            <option value="turnstiles DESC">COM_RW_SORT_TURNSTILES_DESC</option>
+            <option value="direction ASC">COM_RW_SORT_DIRECTION_ASC</option>
+            <option value="direction DESC">COM_RW_SORT_DIRECTION_DESC</option>
             <option value="s.id ASC">COM_RW_SORT_ID_ASC</option>
             <option value="s.id DESC">COM_RW_SORT_ID_DESC</option>
         </field>

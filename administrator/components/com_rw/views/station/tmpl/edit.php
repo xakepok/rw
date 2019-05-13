@@ -23,14 +23,18 @@ HTMLHelper::_('stylesheet', 'com_projects/style.css', array('version' => 'auto',
             <div class="tab-content">
                 <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'general', JText::sprintf('COM_RW_BLANK_STATION_BASE')); ?>
                 <div class="row-fluid">
-                    <div class="span3">
+                    <div class="span12">
                         <div>
                             <?php echo $this->loadTemplate('general'); ?>
                         </div>
                     </div>
-                    <div class="span9">
+                </div>
+                <?php echo JHtml::_('bootstrap.endTab'); ?>
+                <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'turnstiles', JText::sprintf('COM_RW_BLANK_STATION_TURNSTILES')); ?>
+                <div class="row-fluid">
+                    <div class="span12">
                         <div>
-                            <?php echo $this->loadTemplate('info'); ?>
+                            <?php echo $this->loadTemplate('turnstiles'); ?>
                         </div>
                     </div>
                 </div>
