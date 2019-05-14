@@ -54,13 +54,13 @@ defined('_JEXEC') or die;
                     </td>
                     <td>
                         <?php
-                        $url = JRoute::_("index.php?option=com_rw&amp;task=station.stationdir&amp;id={$direction['id']}&amp;return={$this->return}");
+                        $url = JRoute::_("index.php?option=com_rw&amp;task=stationdir.edit&amp;id={$direction['id']}&amp;return={$this->return}");
                         echo JHtml::link($url, JText::sprintf('COM_RW_ACTION_EDIT_DIRECTION_ASSET'));
                         ?>
                     </td>
                     <td>
                         <?php
-                        $url = JRoute::_("index.php?option=com_rw&amp;task=station.removeDir&amp;id={$direction['id']}");
+                        $url = JRoute::_("index.php?option=com_rw&amp;task=stationdir.delete&amp;id={$direction['id']}&amp;return={$this->return}");
                         echo JHtml::link($url, JText::sprintf('COM_RW_ACTION_REMOVE_DIRECTION_ASSET'));
                         ?>
                     </td>
@@ -95,13 +95,13 @@ defined('_JEXEC') or die;
             <tr>
                 <td>
                     <?php
-                    $url = JRoute::_("index.php?option=com_rw&amp;task=station.stationdir&amp;id={$this->item->directions[0]['id']}&amp;return={$this->return}");
+                    $url = JRoute::_("index.php?option=com_rw&amp;task=stationdir.edit&amp;id={$this->item->directions[0]['id']}&amp;return={$this->return}");
                     echo JHtml::link($url, JText::sprintf('COM_RW_ACTION_EDIT_DIRECTION_ASSET'));
                     ?>
                 </td>
                 <td>
                     <?php
-                    $url = JRoute::_("index.php?option=com_rw&amp;task=station.removeDir&amp;id={$this->item->directions[0]['id']}");
+                    $url = JRoute::_("index.php?option=com_rw&amp;task=stationdir.delete&amp;id={$this->item->directions[0]['id']}&amp;return={$this->return}");
                     echo JHtml::link($url, JText::sprintf('COM_RW_ACTION_REMOVE_DIRECTION_ASSET'));
                     ?>
                 </td>
