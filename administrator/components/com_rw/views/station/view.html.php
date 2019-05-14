@@ -3,12 +3,13 @@ defined('_JEXEC') or die;
 use Joomla\CMS\MVC\View\HtmlView;
 
 class RwViewStation extends HtmlView {
-    protected $item, $form, $script, $id, $isAdmin, $fieldset;
+    protected $item, $form, $script, $id, $isAdmin, $fieldset, $return;
 
     public function display($tmp = null) {
         $this->form = $this->get('Form');
         $this->item = $this->get('Item');
         $this->script = $this->get('Script');
+        $this->return = RwHelper::getReturnUrl();
 
         $this->addToolbar();
         $this->setDocument();

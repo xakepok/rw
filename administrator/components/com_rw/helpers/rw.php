@@ -13,6 +13,30 @@ class RwHelper
 	}
 
     /**
+     * @param int $stationID ID станции
+     * @param bool $advanced подробная информация
+     * @return array
+     * @since 1.0.0.5
+     */
+	public static function getStationDirections(int $stationID = 0, bool $advanced = false): array
+    {
+        if ($stationID == 0) return array();
+        $db =& JFactory::getDbo();
+        $query = $db->getQuery(true);
+        $query
+            ->select("`sd`.`id`, `sd`.`directionID`")
+            ->from("`#__rw_station_directions` as `sd`")
+            ->where("`sd`.`stationID` = {$stationID}");
+        if ($advanced) {
+            $query
+                ->select("`d`.`title` as `direction`")
+                ->select("`sd`.`indexID`, `sd`.`zoneID`, `sd`.`level`, `sd`.`new_level`, `sd`.`distance`, `sd`.`default_schedule`")
+                ->leftJoin("`#__rw_directions` as `d` on `d`.`id` = `sd`.`directionID`");
+        }
+        return $db->setQuery($query)->loadAssocList() ?? array();
+    }
+
+    /**
      * Возвращает URL для обработки формы
      * @return string
      * @since 1.0.0.1

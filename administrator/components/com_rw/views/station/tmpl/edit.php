@@ -23,22 +23,32 @@ HTMLHelper::_('stylesheet', 'com_projects/style.css', array('version' => 'auto',
             <div class="tab-content">
                 <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'general', JText::sprintf('COM_RW_BLANK_STATION_BASE')); ?>
                 <div class="row-fluid">
-                    <div class="span12">
+                    <div class="span3">
                         <div>
                             <?php echo $this->loadTemplate('general'); ?>
                         </div>
                     </div>
-                </div>
-                <?php echo JHtml::_('bootstrap.endTab'); ?>
-                <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'turnstiles', JText::sprintf('COM_RW_BLANK_STATION_TURNSTILES')); ?>
-                <div class="row-fluid">
-                    <div class="span12">
+                    <div class="span9">
+                        <div style="text-align: center;">
+                            <h4><?php echo JText::sprintf('COM_RW_BLANK_STATION_DIRECTIONS');?></h4>
+                        </div>
                         <div>
-                            <?php echo $this->loadTemplate('turnstiles'); ?>
+                            <?php echo $this->loadTemplate('directions'); ?>
                         </div>
                     </div>
                 </div>
                 <?php echo JHtml::_('bootstrap.endTab'); ?>
+                <?php if ($this->item->id != null): ?>
+                    <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'turnstiles', JText::sprintf('COM_RW_BLANK_STATION_TURNSTILES')); ?>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div>
+                                <?php echo $this->loadTemplate('turnstiles'); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php echo JHtml::_('bootstrap.endTab'); ?>
+                <?php endif;?>
             </div>
             <?php echo JHtml::_('bootstrap.endTabSet'); ?>
         </div>

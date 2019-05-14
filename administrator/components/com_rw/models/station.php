@@ -15,7 +15,11 @@ class RwModelStation extends AdminModel {
 
     public function getItem($pk = null)
     {
-        return parent::getItem($pk);
+        $item = parent::getItem($pk);
+        if ($item->id != null) {
+            $item->directions = RwHelper::getStationDirections($item->id ?? 0, true);
+        }
+        return $item;
     }
 
     public function getForm($data = array(), $loadData = true)
