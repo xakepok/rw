@@ -12,7 +12,9 @@ HTMLHelper::_('stylesheet', 'com_rw/style.css', array('version' => 'auto', 'rela
     <h3><?php echo JText::sprintf('COM_RW_TITLE_DIRECTION', $this->station->direction);?></h3>
     <?php echo JText::sprintf('COM_RW_TITLE_TURNSTILES', $this->station->turnstiles);?>
 </div>
+<?php if ($this->station->has_turnstiles): ?>
 <div>
     <h4><?php echo JText::sprintf('COM_RW_TITLE_DETOUR');?></h4>
     <?php echo $this->station->detour;?>
 </div>
+<?php endif;?>

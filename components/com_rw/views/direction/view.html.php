@@ -3,22 +3,22 @@ use Joomla\CMS\MVC\View\HtmlView;
 
 defined('_JEXEC') or die;
 
-class RwViewStation extends HtmlView
+class RwViewDirection extends HtmlView
 {
-    protected $station;
+    protected $direction;
     public function display($tpl = null)
     {
-        $this->station = $this->get('Station');
+        $this->direction = $this->get('Direction');
         $this->prepare();
         return parent::display($tpl);
     }
 
     private function prepare(): void
     {
-        if ($this->station->id == null) {
+        if ($this->direction->id == null) {
             $this->_layout = 'error';
             return;
         }
-        $this->setDocumentTitle($this->station->station);
+        $this->setDocumentTitle($this->direction->title);
     }
 }
