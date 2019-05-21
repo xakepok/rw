@@ -5,4 +5,13 @@
 			<![CDATA[COM_RW_MENU_SITE_STATION_DESC]]>
 		</message>
 	</layout>
+	<fieldset name="request">
+		<fields name="request">
+			<field
+					name="id"
+					type="hidden"
+					default="0"
+			/>
+		</fields>
+	</fieldset>
 </metadata>
