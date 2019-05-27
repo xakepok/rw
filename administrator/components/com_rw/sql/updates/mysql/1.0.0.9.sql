@@ -1,0 +1,2 @@
+update `#__rw_station_directions` set indexID = indexID + 1 where directionID = 6 and indexID > 2;
+insert into `#__rw_station_directions` select null, id, 6, 3, 2, 0, 0, 6, 'На Москву' from `#__rw_stations` where id=4276;
