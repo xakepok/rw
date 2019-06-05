@@ -16,7 +16,7 @@ HTMLHelper::_('stylesheet', 'com_rw/style.css', array('version' => 'auto', 'rela
 <div>
     <h3><?php echo JText::sprintf('COM_RW_TITLE_DIRECTION_INFO');?></h3>
     <?php if ($this->direction->is_cocon): ?>
-    <div class="alert alert-danger">
+    <div class="alert alert-danger" role="alert">
         <?php echo JText::sprintf('COM_RW_WARING_COCON');?>
     </div>
     <?php endif;?>

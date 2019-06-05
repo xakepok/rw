@@ -19,6 +19,8 @@ class RwViewDirection extends HtmlView
             $this->_layout = 'error';
             return;
         }
+        $pathway = JFactory::getApplication()->getPathway();
+        $pathway->setItemName($this->direction->id, $this->direction->title);
         $this->setDocumentTitle($this->direction->title);
     }
 }
