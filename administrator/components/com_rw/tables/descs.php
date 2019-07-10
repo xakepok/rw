@@ -7,7 +7,10 @@ defined('_JEXEC') or die;
 class TableRwDescs extends Table
 {
     var $id = null;
-    var $title = null;
+    var $stationID = null;
+    var $time_1 = null;
+    var $time_2 = null;
+    var $time_mask = null;
 
     public function __construct(JDatabaseDriver $db)
     {

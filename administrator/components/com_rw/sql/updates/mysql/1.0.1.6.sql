@@ -583,3 +583,20 @@ INSERT INTO `#__rw_desc` (id, stationID, tppd, time_1, time_2, time_mask) VALUES
 INSERT INTO `#__rw_desc` (id, stationID, tppd, time_1, time_2, time_mask) VALUES (555, 5935, 0, '19:00:00', '21:30:00', '1111100');
 INSERT INTO `#__rw_desc` (id, stationID, tppd, time_1, time_2, time_mask) VALUES (556, 12835, 0, '13:00:00', '19:00:00', '0000001');
 INSERT INTO `#__rw_desc` (id, stationID, tppd, time_1, time_2, time_mask) VALUES (557, 12835, 0, null, null, '1111110');
+
+alter table `#__rw_stations`
+    add tppd boolean default 0 not null comment 'Терминалы предварительного оформления проездных документов';
+
+create index `#__rw_stations_tppd_index`
+    on `#__rw_stations` (tppd);
+
+update `#__rw_stations` s set s.tppd = ifnull((SELECT d.tppd from `#__rw_desc` d where d.stationID = s.id limit 1),0);
+
+alter table `#__rw_stations` modify tppd tinyint(1) default null null comment 'Терминалы предварительного оформления проездных документов';
+
+update `#__rw_stations` set tppd = null where id not in (select distinct stationID from `#__rw_desc`);
+
+drop index `#__rw_desc_tppd_index` on `#__rw_desc`;
+
+alter table `#__rw_desc` drop column tppd;
+
