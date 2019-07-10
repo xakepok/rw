@@ -9,4 +9,22 @@
 			   section="component">
 		</field>
 	</fieldset>
+	<fieldset name="yarasp" label="COM_RW_CONFIG_YA_RASP" description="COM_RW_CONFIG_YA_RASP_DESC">
+		<field name="yarasp_api_key"
+			   label="COM_RW_CONFIG_YA_RASP_API_KEY"
+			   description="COM_RW_CONFIG_YA_RASP_API_KEY_DESC"
+			   type="text"
+			   required="true"
+			   autocomplete="off"
+		/>
+	</fieldset>
+	<fieldset name="yamoney" label="COM_RW_CONFIG_YA_MONEY" description="COM_RW_CONFIG_YA_MONEY_DESC">
+		<field name="yamoney_secret_key"
+			   label="COM_RW_CONFIG_YA_MONEY_SECRET_KEY"
+			   description="COM_RW_CONFIG_YA_MONEY_SECRET_KEY_DESC"
+			   type="text"
+			   required="true"
+			   autocomplete="off"
+		/>
+	</fieldset>
 </config>

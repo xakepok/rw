@@ -12,6 +12,21 @@ class RwHelper
         JHtmlSidebar::addEntry(JText::sprintf('COM_RW_MENU_COUNTRIES'), "index.php?option=com_rw&view=countries", $vName == 'countries');
 	}
 
+    public static function isClub()
+    {
+        if (JFactory::getUser()->guest) return false;
+        $userID = JFactory::getUser()->id;
+        $db =& JFactory::getDbo();
+        $query = $db->getQuery(true);
+        $query
+            ->select("max(`dat`) + interval 1 month as `is_club`")
+            ->from("`#__payments`")
+            ->where("`userID` = {$userID}")
+            ->having("`is_club` > current_timestamp");
+        $result = $db->setQuery($query)->loadResult();
+        return $result ?? false;
+	}
+
     /**
      * @param int $stationID ID станции
      * @param bool $advanced подробная информация

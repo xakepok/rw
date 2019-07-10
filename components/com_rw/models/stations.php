@@ -1,5 +1,6 @@
 <?php
 use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
 defined('_JEXEC') or die;
 
@@ -45,10 +46,41 @@ class RwModelStations extends ListModel
             $url = JRoute::_("index.php?view=station&amp;id={$item->stationID}");
             $arr['station'] = JHtml::link($url, $item->station);
             $arr['indexID'] = $item->indexID;
+            $arr['yandex'] = $item->yandex;
             $arr['zoneID'] = $item->zoneID;
+            $arr['level'] = $item->level;
             $arr['distance'] = JText::sprintf('COM_RW_TITLE_DISTANCE_KM', $item->distance);
             $arr['turnstiles'] = $item->turnstiles ?? JText::sprintf('COM_RW_NO_TURNSTILES');
-            $result[] = $arr;
+            $result["s".$item->yandex] = $arr;
+        }
+        return $result;
+    }
+
+    public function getRasp()
+    {
+        $yarasp = BaseDatabaseModel::getInstance('Yarasp', 'RwModel');
+        $rasp = $yarasp->getRaspBetweenStations(2000006, 9600821);
+        $result = array();
+        foreach ($rasp['rasp'] as $uid => $thread)
+        {
+            foreach ($thread['stops'] as $stop) {
+                if (!isset($result['stations'][$stop['station']['code']][$uid])) $result['stations'][$result[$stop['station']['code']][$uid]] = array('arrival' => null, 'departure' => null);
+                if ($result['uids'][$uid] == null) $result['uids'][$uid] = $thread['number'];
+                if ($stop['arrival'] != null) {
+                    $result['stations'][$stop['station']['code']][$uid]['arrival'] = ($stop['arrival'] != $stop['departure']) ? JDate::getInstance($stop['arrival'])->format("H.i") : '-';
+                }
+                else
+                {
+                    $result['stations'][$stop['station']['code']][$uid]['arrival'] = null;
+                }
+                if ($stop['departure'] != null) {
+                    $result['stations'][$stop['station']['code']][$uid]['departure'] = ($stop['arrival'] != $stop['departure']) ? JDate::getInstance($stop['departure'])->format("H.i") : '-';
+                }
+                else
+                {
+                    $result['stations'][$stop['station']['code']][$uid]['departure'] = null;
+                }
+            }
         }
         return $result;
     }
