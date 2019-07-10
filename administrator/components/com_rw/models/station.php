@@ -8,16 +8,12 @@ class RwModelStation extends AdminModel {
         return JTable::getInstance($name, $prefix, $options);
     }
 
-    public function delete(&$pks)
-    {
-        return parent::delete($pks);
-    }
-
     public function getItem($pk = null)
     {
         $item = parent::getItem($pk);
         if ($item->id != null) {
             $item->directions = RwHelper::getStationDirections($item->id ?? 0, true);
+            $item->descs = $this->getDescs();
         }
         return $item;
     }
@@ -45,6 +41,26 @@ class RwModelStation extends AdminModel {
         return $data;
     }
 
+    /**
+     * Возвращает массив со временем работы касс
+     * @return array
+     * @since 1.0.1.6
+     * @throws
+     */
+    public function getDescs(): array
+    {
+        $id = JFactory::getApplication()->input->getInt('id', 0);
+        if ($id === 0) return array();
+
+        $db =& $this->getDbo();
+        $query = $db->getQuery(true);
+        $query
+            ->select("*")
+            ->from("`#__rw_desc`")
+            ->where("`stationID` = {$id}");
+        return $db->setQuery($query)->loadAssocList() ?? array();
+    }
+
     public function save($data)
     {
         return parent::save($data);
@@ -59,6 +75,13 @@ class RwModelStation extends AdminModel {
         }
         parent::prepareTable($table);
     }
+
+
+    public function delete(&$pks)
+    {
+        return parent::delete($pks);
+    }
+
 
     protected function canEditState($record)
     {
