@@ -28,12 +28,20 @@ HTMLHelper::_('stylesheet', 'com_projects/style.css', array('version' => 'auto',
                             <?php echo $this->loadTemplate('general'); ?>
                         </div>
                     </div>
-                    <div class="span9">
+                    <div class="span4">
                         <div style="text-align: center;">
                             <h4><?php echo JText::sprintf('COM_RW_BLANK_STATION_DIRECTIONS');?></h4>
                         </div>
                         <div>
                             <?php echo $this->loadTemplate('directions'); ?>
+                        </div>
+                    </div>
+                    <div class="span5">
+                        <div style="text-align: center;">
+                            <h4><?php echo JText::sprintf('COM_RW_BLANK_STATION_DESCS');?></h4>
+                        </div>
+                        <div>
+                            <?php if ($this->item->tppd != '1' && (int) $this->item->turnstiles == 0) echo $this->loadTemplate('descs'); ?>
                         </div>
                     </div>
                 </div>

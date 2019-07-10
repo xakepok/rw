@@ -58,7 +58,17 @@ class RwModelStation extends AdminModel {
             ->select("*")
             ->from("`#__rw_desc`")
             ->where("`stationID` = {$id}");
-        return $db->setQuery($query)->loadAssocList() ?? array();
+        $items = $db->setQuery($query)->loadAssocList();
+        if (empty($items)) return array();
+        $result = array();
+        foreach ($items as $item) {
+            $arr = array();
+            $arr['time_mask'] = JText::sprintf("COM_RW_DESC_TIME_MASK_{$item['time_mask']}");
+            $arr['time_1'] = $item['time_1'];
+            $arr['time_2'] = $item['time_2'];
+            $result[] = $arr;
+        }
+        return $result ?? array();
     }
 
     public function save($data)
