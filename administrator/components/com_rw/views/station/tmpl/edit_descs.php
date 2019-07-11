@@ -34,12 +34,17 @@ defined('_JEXEC') or die;
                     <td>
                         <?php echo $desc['time_mask'];?>
                     </td>
-                    <td>
-                        <?php echo $desc['time_1'];?>
-                    </td>
-                    <td>
-                        <?php echo $desc['time_2'];?>
-                    </td>
+                    <?php if ($desc['time_1'] === null && $desc['time_2'] === null): ?>
+                        <td colspan="2" class="center"><?php echo JText::sprintf('COM_RW_DESC_NO_DESC');?></td>
+                    <?php endif;?>
+                    <?php if ($desc['time_1'] !== null && $desc['time_2'] !== null): ?>
+                        <td>
+                            <?php echo $desc['time_1'];?>
+                        </td>
+                        <td>
+                            <?php echo $desc['time_2'];?>
+                        </td>
+                    <?php endif;?>
                     <td>
                         <?php
                         $url = JRoute::_("index.php?option=com_rw&amp;task=desc.edit&amp;id={$desc['id']}&amp;return={$this->return}");
