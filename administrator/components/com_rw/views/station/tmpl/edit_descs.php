@@ -21,7 +21,7 @@ defined('_JEXEC') or die;
                     <?php echo JText::sprintf('COM_RW_HEAD_DESC_TIME_2');?>
                 </th>
                 <th>
-                    <?php echo JText::sprintf('COM_RW_ACTION_EDIT_DESC');?>
+                    <?php echo JText::sprintf('JTOOLBAR_EDIT');?>
                 </th>
                 <th>
                     <?php echo JText::sprintf('COM_RW_ACTION_REMOVE_DESC');?>
@@ -43,14 +43,21 @@ defined('_JEXEC') or die;
                     <td>
                         <?php
                         $url = JRoute::_("index.php?option=com_rw&amp;task=desc.edit&amp;id={$desc['id']}&amp;return={$this->return}");
-                        echo JHtml::link($url, JText::sprintf('COM_RW_ACTION_EDIT_DESC'));
+                        echo JHtml::link($url, JText::sprintf('JTOOLBAR_EDIT'));
                         ?>
                     </td>
                     <td>
                         <?php
                         $url = JRoute::_("index.php?option=com_rw&amp;task=desc.delete&amp;id={$desc['id']}&amp;return={$this->return}");
-                        echo JHtml::link($url, JText::sprintf('COM_RW_ACTION_REMOVE_DESC'));
+                        $r = base64_encode("index.php?option=com_rw&view=station&layout=edit&id={$this->item->id}");
+                        $act = JRoute::_("index.php?option=com_rw&amp;task=descs.delete");
                         ?>
+                        <form action="<?php echo $act;?>" method="post">
+                            <input type="hidden" name="cid[]" value="<?php echo $desc['id'];?>">
+                            <input type="hidden" name="ret" value="<?php echo $r;?>">
+                            <?php echo JHtml::_('form.token');?>
+                            <button type="submit" class="btn btn-danger btn-sm"><?php echo JText::sprintf('COM_RW_ACTION_REMOVE_DESC');?></button>
+                        </form>
                     </td>
                 </tr>
             <?php endforeach;?>
