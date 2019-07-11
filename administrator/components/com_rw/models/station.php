@@ -66,6 +66,7 @@ class RwModelStation extends AdminModel {
             $arr['time_mask'] = JText::sprintf("COM_RW_DESC_TIME_MASK_{$item['time_mask']}");
             $arr['time_1'] = $item['time_1'];
             $arr['time_2'] = $item['time_2'];
+            $arr['id'] = $item['id'];
             $result[] = $arr;
         }
         return $result ?? array();

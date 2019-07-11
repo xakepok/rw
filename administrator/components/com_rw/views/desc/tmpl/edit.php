@@ -10,7 +10,7 @@ HTMLHelper::_('stylesheet', 'com_rw/style.css', array('version' => 'auto', 'rela
 ?>
 <script type="text/javascript">
     Joomla.submitbutton = function (task) {
-        if (task === 'country.cancel' || document.formvalidator.isValid(document.id('adminForm'))) {*/
+        if (task === 'desc.cancel' || document.formvalidator.isValid(document.id('adminForm'))) {*/
             Joomla.submitform(task, document.getElementById('adminForm'));
         }
     }
@@ -21,7 +21,7 @@ HTMLHelper::_('stylesheet', 'com_rw/style.css', array('version' => 'auto', 'rela
         <div class="span12 form-horizontal">
             <?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'general')); ?>
             <div class="tab-content">
-                <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'general', JText::sprintf('COM_RW_BLANK_COUNTRY')); ?>
+                <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'general', JText::sprintf('COM_RW_BLANK_DESC')); ?>
                 <div class="row-fluid">
                     <div class="span12">
                         <div>

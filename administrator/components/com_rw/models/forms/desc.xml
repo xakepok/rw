@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addrulepath="/administrator/components/com_rw/models/rules">
+    <fieldset name="names">
+        <field
+                name="id"
+                type="hidden"
+        />
+        <field
+                name="stationID"
+                type="hidden"
+        />
+        <field
+                name="time_1"
+                type="text"
+                label="COM_RW_HEAD_DESC_TIME_1"
+                description="COM_RW_HEAD_DESC_TIME_1_DESC"
+                default=""
+        />
+        <field
+                name="time_2"
+                type="text"
+                label="COM_RW_HEAD_DESC_TIME_2"
+                description="COM_RW_HEAD_DESC_TIME_2_DESC"
+                default=""
+        />
+        <field
+                name="time_mask"
+                type="list"
+                label="COM_RW_HEAD_DESC_TIME_MASK"
+                description="COM_RW_HEAD_DESC_TIME_MASK_DESC"
+                required="true"
+                default="1111111"
+                >
+            <option value="1111111">COM_RW_DESC_TIME_MASK_1111111</option>
+            <option value="1111100">COM_RW_DESC_TIME_MASK_1111100</option>
+            <option value="0000011">COM_RW_DESC_TIME_MASK_0000011</option>
+            <option value="1111000">COM_RW_DESC_TIME_MASK_1111000</option>
+            <option value="0000110">COM_RW_DESC_TIME_MASK_0000110</option>
+            <option value="1111110">COM_RW_DESC_TIME_MASK_1111110</option>
+            <option value="0000010">COM_RW_DESC_TIME_MASK_0000010</option>
+            <option value="0000001">COM_RW_DESC_TIME_MASK_0000001</option>
+        </field>
+    </fieldset>
+</form>
