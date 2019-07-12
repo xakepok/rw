@@ -12,7 +12,7 @@ HTMLHelper::_('stylesheet', '//cdn.datatables.net/1.10.19/css/jquery.dataTables.
 HTMLHelper::_('stylesheet', '//cdn.datatables.net/fixedcolumns/3.2.6/css/fixedColumns.dataTables.min.css', array('version' => 'auto', 'relative' => true));
 ?>
 <h1><?php echo JText::sprintf('COM_RW_TITLE_DIRECTION', $this->direction);?></h1>
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <div class="col">
             <table class="table table-sm">
