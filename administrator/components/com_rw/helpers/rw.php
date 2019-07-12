@@ -45,6 +45,11 @@ class RwHelper
         );
 	}
 
+    /**
+     * Возвращает timestamp, до которой активно членство в клубе, либо false, если юзер не в клубе
+     * @return bool|mixed
+     * @since 1.0.2.0
+     */
     public static function isClub()
     {
         if (JFactory::getUser()->guest) return false;
@@ -52,10 +57,10 @@ class RwHelper
         $db =& JFactory::getDbo();
         $query = $db->getQuery(true);
         $query
-            ->select("max(`dat`) + interval 1 month as `is_club`")
-            ->from("`#__payments`")
+            ->select("`expire`")
+            ->from("`#__rw_club`")
             ->where("`userID` = {$userID}")
-            ->having("`is_club` > current_timestamp");
+            ->where("`expire` > current_timestamp");
         $result = $db->setQuery($query)->loadResult();
         return $result ?? false;
 	}

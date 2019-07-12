@@ -26,6 +26,11 @@ HTMLHelper::_('stylesheet', '//cdn.datatables.net/fixedcolumns/3.2.6/css/fixedCo
                     <?php echo JText::sprintf('COM_RW_HEAD_STATION_ZONE_DISTANCE');?>
                 </th>
             <?php endif;?>
+            <?php if ($this->isClub !== false): ?>
+                <th>
+                    <?php echo JText::sprintf('COM_RW_MODAL_TITLE_DESCS');?>
+                </th>
+            <?php endif;?>
             <th>
                 <?php echo JText::sprintf('COM_RW_HEAD_STATION_ZONE_TURNSTILES');?>
             </th>
@@ -39,11 +44,30 @@ HTMLHelper::_('stylesheet', '//cdn.datatables.net/fixedcolumns/3.2.6/css/fixedCo
                 <?php if (!JFactory::getApplication()->client->mobile): ?>
                     <td><?php echo $item['distance'];?></td>
                 <?php endif;?>
+                <?php if ($this->isClub !== false): ?>
+                    <td>
+                        <?php if (isset($item['descs']) && $item['descs'][0]['tppd'] !== true && $item['descs'][0]['everyday'] !== true && $item['descs'][0]['no_desc'] !== true): ?>
+                            <a href="#" data-toggle="modal" data-target="#modal_desc_<?php echo $item['id'];?>"><?php echo JText::sprintf('COM_RW_MODAL_TITLE_DESCS');?></a>
+                        <?php endif;?>
+                        <?php if (isset($item['descs']) && $item['descs'][0]['tppd'] === true): ?>
+                            <?php echo JText::sprintf('COM_RW_DESC_TPPD');?>
+                        <?php endif;?>
+                        <?php if (isset($item['descs']) && $item['descs'][0]['time_mask'] === null): ?>
+                            <?php echo JText::sprintf('COM_RW_DESC_UNKNOWN');?>
+                        <?php endif;?>
+                        <?php if (isset($item['descs']) && $item['descs'][0]['everyday'] === true): ?>
+                            <?php echo JText::sprintf('COM_RW_DESC_TIME_MASK_EVERYDAY');?>
+                        <?php endif;?>
+                        <?php if (isset($item['descs']) && $item['descs'][0]['no_desc'] === true): ?>
+                            <?php echo JText::sprintf('COM_RW_DESC_NO_DESC');?>
+                        <?php endif;?>
+                    </td>
+                <?php endif;?>
                 <td><?php echo $item['turnstiles'];?></td>
             </tr>
         <?php endforeach;?>
     </tbody>
 </table>
 <div>
-    <?php //echo $this->loadTemplate('rasp');?>
+    <?php echo $this->loadTemplate('descs');?>
 </div>
