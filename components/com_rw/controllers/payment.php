@@ -7,8 +7,9 @@ class RwControllerPayment extends FormController {
     public function add()
     {
         $model = $this->getModel();
-        $input = JFactory::getApplication()->input;
-        $arr = array('id' => null, 'amount' => 1.75, 'userID' => 915);
+        $arr = $model->getPaymentData();
+        if (!$model->checkSignature()) exit('Bad signature');
+        $model->provideService();
         $model->save($arr);
         http_response_code(200);
         exit('ok');

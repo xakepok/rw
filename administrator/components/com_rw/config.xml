@@ -27,4 +27,25 @@
 			   autocomplete="off"
 		/>
 	</fieldset>
+	<fieldset name="club" label="COM_RW_CONFIG_CLUB" description="COM_RW_CONFIG_CLUB_DESC">
+		<field name="club_price"
+			   label="COM_RW_CONFIG_CLUB_PRICE"
+			   description="COM_RW_CONFIG_CLUB_PRICE_DESC"
+			   type="text"
+			   filter="float"
+			   default="36"
+			   hint="36.00"
+			   required="true"
+		/>
+		<field name="club_group_members"
+				type="usergrouplist"
+				label="COM_RW_CONFIG_CLUB_GROUP_MEMBERS"
+				description="COM_RW_CONFIG_CLUB_GROUP_MEMBERS_DESC"
+		/>
+		<field name="club_group_no_members"
+				type="usergrouplist"
+				label="COM_RW_CONFIG_CLUB_GROUP_NO_MEMBERS"
+				description="COM_RW_CONFIG_CLUB_GROUP_NO_MEMBERS_DESC"
+		/>
+	</fieldset>
 </config>

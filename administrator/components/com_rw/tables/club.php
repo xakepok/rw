@@ -4,20 +4,15 @@ use Joomla\CMS\Table\Table;
 
 defined('_JEXEC') or die;
 
-class TableRwPayments extends Table
+class TableRwClub extends Table
 {
     var $id = null;
-    var $dat = null;
     var $userID = null;
-    var $amount = null;
-    var $withdraw_amount = null;
-    var $operationID = null;
-    var $label = null;
-    var $variant = null;
+    var $expire = null;
 
     public function __construct(JDatabaseDriver $db)
     {
-        parent::__construct('#__payments', 'id', $db);
+        parent::__construct('#__rw_club', 'id', $db);
     }
 
     public function load($keys = null, $reset = true)

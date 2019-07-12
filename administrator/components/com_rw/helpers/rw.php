@@ -12,6 +12,39 @@ class RwHelper
         JHtmlSidebar::addEntry(JText::sprintf('COM_RW_MENU_COUNTRIES'), "index.php?option=com_rw&view=countries", $vName == 'countries');
 	}
 
+    /**
+     * Продлевает членство в клубе определённого юзера
+     * @param int $userID ID юзера
+     * @since 1.0.1.8
+     */
+    public static function addClub(int $userID): void
+    {
+        $db =& JFactory::getDbo();
+        $query = "INSERT INTO `#__rw_club` (userID, expire) VALUES ({$userID}, current_timestamp + interval 1 month) on duplicate key update expire = expire + interval 1 month";
+        $db->setQuery($query)->execute();
+        $params = JComponentHelper::getParams('com_rw');
+        $userGroups = JUserHelper::getUserGroups($userID);
+        $groupMembers = $params->get('club_group_members');
+        $groupNotMembers = $params->get('club_group_no_members');
+        if (!in_array($groupMembers, $userGroups)) JUserHelper::addUserToGroup($userID, $groupMembers);
+        if (in_array($groupNotMembers, $userGroups)) JUserHelper::removeUserFromGroup($userID, $groupNotMembers);
+	}
+
+    /**
+     * Параметры лога
+     * @return array
+     * @since 1.0.1.8
+     */
+    public static function getLogOptions(): array
+    {
+        return array(
+            'text_file' => 'error.php',
+            'text_file_path' => null,
+            'text_file_no_php' => false,
+            'text_entry_format' => ''
+        );
+	}
+
     public static function isClub()
     {
         if (JFactory::getUser()->guest) return false;
