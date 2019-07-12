@@ -43,7 +43,8 @@ class RwModelStations extends ListModel
         foreach ($items as $item) {
             $arr = array();
             $arr['id'] = $item->stationID;
-            $url = JRoute::_("index.php?view=station&amp;id={$item->stationID}");
+            //$url = JRoute::_("index.php?view=station&amp;id={$item->stationID}");
+            $url = "/station/?id={$item->stationID}";
             $arr['station'] = JHtml::link($url, $item->station);
             $arr['indexID'] = $item->indexID;
             $arr['yandex'] = $item->yandex;

@@ -11,7 +11,7 @@ class RwRouter extends RouterView
     {
         $directions = new RouterViewconfiguration('directions');
         $this->registerView($directions);
-        $direction = new RouterViewconfiguration('direction');
+        $direction = new RouterViewconfiguration('station');
         $direction->setKey('id');
         $this->registerView($direction);
         parent::__construct($app, $menu);
