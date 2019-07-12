@@ -11,6 +11,9 @@ foreach ($this->items as $i => $item) :
             <?php echo $item['station'];?>
         </td>
         <td>
+            <?php echo $item['indexID'];?>
+        </td>
+        <td>
             <?php echo $item['yandex'];?>
         </td>
         <td>
@@ -24,6 +27,9 @@ foreach ($this->items as $i => $item) :
         </td>
         <td>
             <?php echo $item['turnstiles'];?>
+        </td>
+        <td>
+            <?php echo $item['tppd'];?>
         </td>
         <td>
             <?php echo $item['region'];?>

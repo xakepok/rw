@@ -45,6 +45,20 @@
             <option value="0">JNO</option>
             <option value="1">JYES</option>
         </field>
+        <field
+                name="tppd"
+                type="list"
+                label="COM_RW_FILTER_SELECT_TPPD"
+                description="COM_RW_FILTER_SELECT_TPPD"
+                hint="COM_RW_FILTER_SELECT_TPPD"
+                autocomplete="off"
+                onchange="this.form.submit();"
+                class="js-stools-search-string">
+            <option value="">COM_RW_FILTER_SELECT_TPPD</option>
+            <option value="2">COM_RW_FORM_STATION_TPPD_UNKNOWN</option>
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
     </fields>
     <fields name="list">
         <field
@@ -62,6 +76,8 @@
             <option value="region DESC">COM_RW_SORT_REGION_DESC</option>
             <option value="country ASC">COM_RW_SORT_COUNTRY_ASC</option>
             <option value="country DESC">COM_RW_SORT_COUNTRY_DESC</option>
+            <option value="indexID ASC">COM_RW_SORT_INDEX_ID_ASC</option>
+            <option value="indexID DESC">COM_RW_SORT_INDEX_ID_DESC</option>
             <option value="yandex ASC">COM_RW_SORT_YANDEX_ASC</option>
             <option value="yandex DESC">COM_RW_SORT_YANDEX_DESC</option>
             <option value="esr ASC">COM_RW_SORT_ESR_ASC</option>
@@ -70,6 +86,8 @@
             <option value="express DESC">COM_RW_SORT_EXPRESS_DESC</option>
             <option value="turnstiles ASC">COM_RW_SORT_TURNSTILES_ASC</option>
             <option value="turnstiles DESC">COM_RW_SORT_TURNSTILES_DESC</option>
+            <option value="tppd ASC">COM_RW_SORT_TPPD_ASC</option>
+            <option value="tppd DESC">COM_RW_SORT_TPPD_DESC</option>
             <option value="direction ASC">COM_RW_SORT_DIRECTION_ASC</option>
             <option value="direction DESC">COM_RW_SORT_DIRECTION_DESC</option>
             <option value="s.id ASC">COM_RW_SORT_ID_ASC</option>

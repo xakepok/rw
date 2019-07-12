@@ -10,7 +10,7 @@ class RwModelStations extends ListModel
         if (empty($config['filter_fields']))
         {
             $config['filter_fields'] = array(
-                's.id', 'country', 'region', 'search', 'esr', 'yandex', 'express', 'turnstiles', 'direction',
+                's.id', 'country', 'region', 'search', 'esr', 'yandex', 'express', 'turnstiles', 'direction', 'indexID', 'tppd',
             );
         }
         parent::__construct($config);
@@ -21,9 +21,10 @@ class RwModelStations extends ListModel
         $db =& $this->getDbo();
         $query = $db->getQuery(true);
         $query
-            ->select("`s`.`id`, `s`.`title` as`station`, `s`.`regionID`, `s`.`yandex`, `s`.`esr`, `s`.`express`, IF(`s`.`turnstiles` is null, 0, 1) as `turnstiles`")
+            ->select("`s`.`id`, `s`.`title` as`station`, `s`.`regionID`, `s`.`yandex`, `s`.`esr`, `s`.`express`, IF(`s`.`turnstiles` is null, 0, 1) as `turnstiles`, `s`.`tppd`")
             ->select("CASE LENGTH(`s`.`esr`) WHEN 3 THEN CONCAT('000',`s`.`esr`) WHEN 4 THEN CONCAT('00',`s`.`esr`) WHEN 5 THEN CONCAT('0',`s`.`esr`) WHEN 6 THEN `s`.`esr` END as `esr`")
             ->select("`d`.`title` as `direction`")
+            ->select("`di`.`indexID`")
             ->select("`r`.`countryID`, `r`.`title` as `region`")
             ->select("`c`.`title` as `country`")
             ->from("`#__rw_stations` as `s`")
@@ -57,7 +58,17 @@ class RwModelStations extends ListModel
                 $query->where("`s`.`turnstiles` is null");
             }
             else {
-                $query->where("`s`.`turnstiles`is not null");
+                $query->where("`s`.`turnstiles` is not null");
+            }
+        }
+        //Фильтр по наличию ТППД
+        $tppd = $this->getState('filter.tppd');
+        if (is_numeric($tppd)) {
+            if ($tppd == 2) {
+                $query->where("`s`.`tppd` is null");
+            }
+            else {
+                $query->where("`s`.`tppd` = {$tppd}");
             }
         }
 
@@ -81,10 +92,26 @@ class RwModelStations extends ListModel
             $arr['station'] = JHtml::link($url, $item->station);
             $arr['country'] = $item->country;
             $arr['region'] = $item->region;
+            $arr['indexID'] = $item->indexID;
             $arr['esr'] = $item->esr;
             $arr['yandex'] = $item->yandex;
             $arr['express'] = ($item->express == '0') ? JText::sprintf('COM_RW_NO_INFO') : $item->express;
             $arr['turnstiles'] = JText::sprintf(($item->turnstiles != '0') ? 'JYES' : 'JNO');
+            switch ($item->tppd)
+            {
+                case '0': {
+                    $arr['tppd'] = 'JNO';
+                    break;
+                }
+                case '1': {
+                    $arr['tppd'] = 'JYES';
+                    break;
+                }
+                default: {
+                    $arr['tppd'] = 'COM_RW_FORM_STATION_TPPD_UNKNOWN';
+                }
+            }
+            $arr['tppd'] = JText::sprintf($arr['tppd']);
             $arr['directions'][] = $item->direction;
             if (!isset($result[$item->id])) {
                 $result[$item->id] = $arr;
@@ -123,6 +150,8 @@ class RwModelStations extends ListModel
         $this->setState('filter.direction', $region);
         $turnstiles = $this->getUserStateFromRequest($this->context . '.filter.turnstiles', 'filter_turnstiles');
         $this->setState('filter.turnstiles', $turnstiles);
+        $tppd = $this->getUserStateFromRequest($this->context . '.filter.tppd', 'filter_tppd');
+        $this->setState('filter.tppd', $tppd);
         parent::populateState($ordering, $direction);
     }
 
@@ -132,6 +161,7 @@ class RwModelStations extends ListModel
         $id .= ':' . $this->getState('filter.search');
         $id .= ':' . $this->getState('filter.direction');
         $id .= ':' . $this->getState('filter.turnstiles');
+        $id .= ':' . $this->getState('filter.tppd');
         return parent::getStoreId($id);
     }
 }

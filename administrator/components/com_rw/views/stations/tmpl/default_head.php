@@ -11,6 +11,9 @@ $listDirn    = $this->escape($this->state->get('list.direction'));
         <?php echo JHtml::_('searchtools.sort', 'COM_RW_HEAD_STATION', 'station', $listDirn, $listOrder); ?>
     </th>
     <th>
+        <?php echo JHtml::_('searchtools.sort', 'COM_RW_HEAD_STATION_INDEX', 'indexID', $listDirn, $listOrder); ?>
+    </th>
+    <th>
         <?php echo JHtml::_('searchtools.sort', 'COM_RW_HEAD_CODE_YANDEX', 'yandex', $listDirn, $listOrder); ?>
     </th>
     <th>
@@ -24,6 +27,9 @@ $listDirn    = $this->escape($this->state->get('list.direction'));
     </th>
     <th>
         <?php echo JHtml::_('searchtools.sort', 'COM_RW_HEAD_TURNSTILES', 'turnstiles', $listDirn, $listOrder); ?>
+    </th>
+    <th>
+        <?php echo JHtml::_('searchtools.sort', 'COM_RW_HEAD_TPPD', 'tppd', $listDirn, $listOrder); ?>
     </th>
     <th>
         <?php echo JHtml::_('searchtools.sort', 'COM_RW_HEAD_REGION', 'region', $listDirn, $listOrder); ?>
