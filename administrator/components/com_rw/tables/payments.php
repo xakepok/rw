@@ -14,6 +14,7 @@ class TableRwPayments extends Table
     var $operationID = null;
     var $label = null;
     var $variant = null;
+    var $sender = null;
 
     public function __construct(JDatabaseDriver $db)
     {
