@@ -3,14 +3,14 @@ use Joomla\CMS\MVC\Model\ListModel;
 
 defined('_JEXEC') or die;
 
-class RwModelCountries extends ListModel
+class RwModelPayments extends ListModel
 {
     public function __construct($config = array())
     {
         if (empty($config['filter_fields']))
         {
             $config['filter_fields'] = array(
-                'id', 'title', 'search'
+                'p.id', 'p.dat', 'p.amount', 'variant', 'p.amount', 'p.withdraw_amount', 'p.operationID', 'p.label', 'p.sender', 'search', 'u.name',
             );
         }
         parent::__construct($config);
@@ -21,14 +21,16 @@ class RwModelCountries extends ListModel
         $db =& $this->getDbo();
         $query = $db->getQuery(true);
         $query
-            ->select("*")
-            ->from("`#__rw_countries`");
+            ->select("p.id, p.dat, p.amount, p.withdraw_amount, p.operationID, p.label, p.variant")
+            ->select("u.name as user")
+            ->from("`#__payments` p")
+            ->leftJoin("`#__users` u on u.id = p.userID");
 
         /* Фильтр */
         $search = $this->getState('filter.search');
         if (!empty($search)) {
             $search = $db->q("%{$search}%");
-            $query->where("`title` LIKE {$search}");
+            $query->where("(`u`.`name` LIKE {$search} OR `p`.`operationID` LIKE {$search} OR `p`.`label` LIKE {$search})");
         }
 
         /* Сортировка */
@@ -46,16 +48,22 @@ class RwModelCountries extends ListModel
         if (empty($items)) return $result;
         foreach ($items as $item) {
             $arr = array();
+            $dat = JDate::getInstance($item->dat);
             $arr['id'] = $item->id;
-            $url = JRoute::_("index.php?option=com_rw&amp;task=country.edit&amp;id={$item->id}");
-            $arr['title'] = JHtml::link($url, $item->title);
+            $arr['dat'] = $dat->format("d.m.Y");
+            $arr['user'] = $item->user;
+            $arr['amount'] = $item->amount;
+            $arr['withdraw_amount'] = $item->withdraw_amount;
+            $arr['operationID'] = $item->operationID;
+            $arr['label'] = $item->label;
+            $arr['variant'] = JText::sprintf("COM_RW_PAYMENT_VARIANT_{$item->variant}");
             $result[] = $arr;
         }
         return $result;
     }
 
     /* Сортировка по умолчанию */
-    protected function populateState($ordering = 'title', $direction = 'asc')
+    protected function populateState($ordering = 'p.dat', $direction = 'desc')
     {
         $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
         $this->setState('filter.search', $search);
