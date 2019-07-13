@@ -10,6 +10,18 @@
                 autocomplete="off"
                 class="js-stools-search-string"
         />
+        <field
+                name="variant"
+                type="list"
+                label="COM_RW_FILTER_SELECT_PAYMENT_VARIANT"
+                description="COM_RW_FILTER_SELECT_PAYMENT_VARIANT"
+                hint="COM_RW_FILTER_SELECT_PAYMENT_VARIANT"
+                onchange="this.form.submit();"
+                >
+            <option value="">COM_RW_FILTER_SELECT_PAYMENT_VARIANT</option>
+            <option value="0">COM_RW_PAYMENT_VARIANT_0</option>
+            <option value="1">COM_RW_PAYMENT_VARIANT_1</option>
+        </field>
     </fields>
     <fields name="list">
         <field
@@ -18,7 +30,7 @@
                 label="COM_RW_FILTER_SELECT_FULL_ORDERING"
                 description="COM_RW_FILTER_SELECT_FULL_ORDERING_DESC"
                 onchange="this.form.submit();"
-                default="title ASC"
+                default="p.dat DESC"
                 >
             <option value="">JGLOBAL_SORT_BY</option>
             <option value="p.dat ASC">COM_RW_SORT_PAYMENT_DATE_ASC</option>

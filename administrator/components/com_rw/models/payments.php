@@ -32,6 +32,13 @@ class RwModelPayments extends ListModel
             $search = $db->q("%{$search}%");
             $query->where("(`u`.`name` LIKE {$search} OR `p`.`operationID` LIKE {$search} OR `p`.`label` LIKE {$search})");
         }
+        //Фильтр по типу платежа
+        $variant = $this->getState('filter.variant');
+        if (is_numeric($variant)) {
+            $variant = $db->q($variant);
+            $query->where("`p`.`variant` = {$variant}");
+        }
+
 
         /* Сортировка */
         $orderCol  = $this->state->get('list.ordering');
@@ -52,8 +59,8 @@ class RwModelPayments extends ListModel
             $arr['id'] = $item->id;
             $arr['dat'] = $dat->format("d.m.Y");
             $arr['user'] = $item->user;
-            $arr['amount'] = $item->amount;
-            $arr['withdraw_amount'] = $item->withdraw_amount;
+            $arr['amount'] = JText::sprintf('COM_RW_AMOUNT_RUB', $item->amount);
+            $arr['withdraw_amount'] = JText::sprintf('COM_RW_AMOUNT_RUB', $item->withdraw_amount);
             $arr['operationID'] = $item->operationID;
             $arr['label'] = $item->label;
             $arr['variant'] = JText::sprintf("COM_RW_PAYMENT_VARIANT_{$item->variant}");
@@ -67,12 +74,15 @@ class RwModelPayments extends ListModel
     {
         $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
         $this->setState('filter.search', $search);
+        $variant = $this->getUserStateFromRequest($this->context . '.filter.variant', 'filter_variant');
+        $this->setState('filter.variant', $variant);
         parent::populateState($ordering, $direction);
     }
 
     protected function getStoreId($id = '')
     {
         $id .= ':' . $this->getState('filter.search');
+        $id .= ':' . $this->getState('filter.variant');
         return parent::getStoreId($id);
     }
 }
