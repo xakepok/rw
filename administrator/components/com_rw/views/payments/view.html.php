@@ -22,7 +22,7 @@ class RwViewPayments extends HtmlView
 
 		// Show the sidebar
 		$this->helper = new RwHelper();
-		$this->helper->addSubmenu('countries');
+		$this->helper->addSubmenu('payments');
 		$this->sidebar = JHtmlSidebar::render();
 
 		// Display it all
