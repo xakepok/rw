@@ -31,9 +31,10 @@ class RwModelDirections extends ListModel
     {
         $items = parent::getItems();
         $result = array();
+        $itemID = RwHelper::getMenuItemId('direction');
         foreach ($items as $item) {
             $arr = array();
-            $url = JRoute::_("index.php?option=com_rw&amp;view=direction&amp;id={$item->id}");
+            $url = JRoute::_("index.php?option=com_rw&amp;view=direction&amp;id={$item->id}&amp;Itemid={$itemID}");
             $arr['title'] = JHtml::link($url, $item->title);
             $result[] = $arr;
         }

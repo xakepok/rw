@@ -91,6 +91,30 @@ class RwHelper
     }
 
     /**
+     * Воввращает ID пункта меню по алиасу
+     * @param string $alias алиса
+     * @param string $menutype тип меню
+     * @param string $component $option компонента
+     * @return int
+     * @since 1.0.2.3
+     */
+    public static function getMenuItemId(string $alias, string $component = 'com_rw', string $menutype = 'mainmenu'): int
+    {
+        $db =& JFactory::getDbo();
+        $query = $db->getQuery(true);
+        $menutype = $db->q($menutype);
+        $alias = $db->q($alias);
+        $componentID = JComponentHelper::getComponent($component)->id;
+        $query
+            ->select("id")
+            ->from("#__menu")
+            ->where("`component_id` = {$componentID}")
+            ->where("`menutype` = {$menutype}")
+            ->where("`alias` = {$alias}");
+        return (int) $db->setQuery($query, 0, 1)->loadResult() ?? 0;
+    }
+
+    /**
      * Возвращает URL для обработки формы
      * @return string
      * @since 1.0.0.1

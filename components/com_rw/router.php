@@ -1,44 +1,66 @@
 <?php
-use Joomla\CMS\Component\Router\RouterView;
-use Joomla\CMS\Component\Router\Rules\MenuRules;
-use Joomla\CMS\Component\Router\Rules\NomenuRules;
-use Joomla\CMS\Component\Router\Rules\StandardRules;
-use Joomla\CMS\Component\Router\RouterViewConfiguration;
 
-class RwRouter extends RouterView
+class RwRouter extends JComponentRouterView
 {
     public function __construct($app = null, $menu = null)
     {
-        $directions = new RouterViewconfiguration('directions');
+        $directions = new JComponentRouterViewconfiguration('directions');
         $this->registerView($directions);
-        $direction = new RouterViewconfiguration('station');
+        $direction = new JComponentRouterViewconfiguration('direction');
         $direction->setKey('id');
         $this->registerView($direction);
+        $station = new JComponentRouterViewconfiguration('station');
+        $station->setKey('id');
+        $this->registerView($station);
         parent::__construct($app, $menu);
 
-        $this->attachRule(new MenuRules($this));
-        $this->attachRule(new StandardRules($this));
-        $this->attachRule(new NomenuRules($this));
-    }
-
-    public function getDirectionsSegment($id, $query)
-    {
-        return $this->getDirectionSegment($id, $query);
-    }
-
-    public function getDirectionSegment($id, $query)
-    {
-        //exit(var_dump($query));
-        $segment = array((int) $id => $query['view'] . ':' . $id);
-        return $segment;
+        $this->attachRule(new JComponentRouterRulesMenu($this));
+        $this->attachRule(new JComponentRouterRulesStandard($this));
+        $this->attachRule(new JComponentRouterRulesNomenu($this));
     }
 
     public function getDirectionId($segment, $query)
     {
-        if (isset($query['id']))
+        return (int) $segment;
+    }
+
+    public function getDirectionSegment($id, $query)
+    {
+        unset($query['view']);
+        return array($id);
+    }
+
+    public function build(&$query)
+    {
+        $segments = array();
+        switch ($query['view'])
         {
-            return (int) $segment;
+            case 'stations': {
+                $segments[] = $query['directionID'];
+                unset($query['directionID']);
+                break;
+            }
+            default: {
+                $segments[] = $query['id'];
+            }
         }
-        return false;
+        unset($query['view'], $query['id']);
+        return $segments;
+    }
+
+    public function parse(&$segments)
+    {
+        $menu = JFactory::getApplication()->getMenu('site')->getActive();
+        $alias = $menu->alias;
+        switch ($alias)
+        {
+            case 'stations': {
+                break;
+            }
+            default: {
+                $menu->query['id'] = $segments[0];
+            }
+        }
+        return parent::parse($segments);
     }
 }

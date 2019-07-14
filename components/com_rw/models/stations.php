@@ -41,12 +41,12 @@ class RwModelStations extends ListModel
         $items = parent::getItems();
         $result = array();
         $ids = array();
+        $itemID = RwHelper::getMenuItemId('station');
         foreach ($items as $item) {
             $arr = array();
             $arr['id'] = $item->stationID;
             if (!in_array($item->stationID, $ids) && $item->turnstiles === null) $ids[] = $item->stationID;
-            //$url = JRoute::_("index.php?view=station&amp;id={$item->stationID}");
-            $url = "/station/?id={$item->stationID}";
+            $url = JRoute::_("index.php?view=station&amp;id={$item->stationID}&amp;Itemid={$itemID}");
             $arr['station'] = JHtml::link($url, $item->station);
             $arr['indexID'] = $item->indexID;
             $arr['yandex'] = $item->yandex;
