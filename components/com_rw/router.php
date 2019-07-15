@@ -55,6 +55,7 @@ class RwRouter extends JComponentRouterView
         switch ($alias)
         {
             case 'stations': {
+                $menu->query['directionID'] = $segments[0];
                 break;
             }
             default: {
