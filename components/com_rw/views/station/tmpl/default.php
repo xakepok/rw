@@ -18,3 +18,8 @@ HTMLHelper::_('stylesheet', 'com_rw/style.css', array('version' => 'auto', 'rela
     <?php echo $this->station->detour;?>
 </div>
 <?php endif;?>
+<?php if ($this->station->rasp !== null): ?>
+    <div class="container-fluid">
+        <?php echo $this->loadTemplate('rasp');?>
+    </div>
+<?php endif;?>

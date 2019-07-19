@@ -15,6 +15,8 @@ class TableRwStationsinfo extends Table
     var $express = null;
     var $turnstiles = null;
     var $detour = null;
+    var $tppd = null;
+    var $schedule = null;
 
     public function __construct(JDatabaseDriver $db)
     {

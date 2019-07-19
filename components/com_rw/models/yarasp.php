@@ -40,6 +40,40 @@ class RwModelYarasp extends BaseDatabaseModel
         return $result;
     }
 
+    /**
+     * Возвращает расписание по станции
+     * @param int $code код станции в Яндексе
+     * @param string $date дата расписания
+     * @param string $direction направление расписания
+     * @return array
+     * @since 1.0.2.6
+     */
+    public function getRaspByStation(int $code, string $direction = 'all', string $date = ''): array
+    {
+        $result = array('schedule' => array());
+        if ($code === 0) return $result;
+        $data = array();
+        $data['station'] = "s".$code;
+        $data['date'] = $date ?? JDate::getInstance()->format("Y-m-d");
+        $data['direction'] = $direction;
+        $data['transport_types'] = 'suburban';
+        $data['show_systems'] = 'all';
+        $data = $this->getParams($data);
+
+        $need = true;
+        while ($need)
+        {
+            $url = "https://api.rasp.yandex.net/v3.0/schedule/?" . http_build_query($data);
+            $rasp = file_get_contents($url);
+            $rasp = json_decode($rasp, true);
+            $result['schedule'] = array_merge($result['schedule'], $rasp['schedule']);
+            if (!isset($result['directions'])) $result['directions'] = $rasp['directions'];
+            $data['offset'] += 100;
+            if ($rasp['pagination']['total'] < ($rasp['pagination']['offset'] + $rasp['pagination']['limit'])) $need = false;
+        }
+        return $result;
+    }
+
     public function getRaspThread(string $uid): array
     {
         $data = array();
