@@ -27,10 +27,18 @@ class RwModelStation extends ItemModel
         $table->has_turnstiles = ($table->turnstiles != null) ? true : false;
         $table->turnstiles = mb_strtolower($table->turnstiles ?? JText::sprintf('COM_RW_NO_TURNSTILES'));
         if ($table->yandex !== null) {
+            $direction = JFactory::getApplication()->input->getString('direction', $table->schedule);
             $yarasp = BaseDatabaseModel::getInstance('Yarasp', 'RwModel');
-            $rasp = $yarasp->getRaspByStation($table->yandex ?? 2000000, $table->schedule, $date);
+            $rasp = $yarasp->getRaspByStation($table->yandex ?? 2000000, $direction, $date);
             $table->rasp['schedule'] = $this->prepareRasp($rasp['schedule']);
             $table->rasp['directions'] = $rasp['directions'];
+            $table->rasp['direction'] = $direction;
+            $table->rasp['date'] = $date;
+            $itemID = RwHelper::getMenuItemId('station');
+            foreach ($table->rasp['directions'] as $i => $dir) {
+                $code = urlencode($dir['code']);
+                $table->rasp['directions'][$i]['url'] = JRoute::_("index.php?option=com_rw&amp;view=station&amp;id={$id}&amp;direction={$code}&amp;date={$date}&amp;Itemid={$itemID}");
+            }
         }
         return $table;
     }
@@ -63,7 +71,6 @@ class RwModelStation extends ItemModel
             $arr['terminal'] = $item['terminal'];
             $arr['platform'] = $item['platform'];
             $arr['color'] = $item['thread']['transport_subtype']['color'];
-            $arr['type'] = $item['thread']['transport_subtype']['title'];
             if ($item['thread']['transport_subtype']['code'] != 'suburban') {
                 $ttype = strip_tags($item['thread']['transport_subtype']['title']);
                 $ttype = str_ireplace("(", " (", $ttype);
