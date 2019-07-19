@@ -81,14 +81,7 @@ class RwModelYarasp extends BaseDatabaseModel
         $data = $this->getParams($data);
         $url = "https://api.rasp.yandex.net/v3.0/thread/?" . http_build_query($data);
         $rasp = file_get_contents($url);
-        if ($rasp == null) exit(var_dump($uid));
-        try {
-            $rasp = json_decode($rasp, true);
-            if (!isset($rasp['stops'])) exit(var_dump($rasp));;
-        }
-        catch (Exception $exception) {
-            exit(var_dump($rasp));
-        }
+        $rasp = json_decode($rasp, true);
         return $rasp;
     }
 

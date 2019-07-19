@@ -12,6 +12,9 @@ class RwRouter extends JComponentRouterView
         $station = new JComponentRouterViewconfiguration('station');
         $station->setKey('id');
         $this->registerView($station);
+        $thread = new JComponentRouterViewconfiguration('thread');
+        $thread->setKey('uid');
+        $this->registerView($thread);
         parent::__construct($app, $menu);
 
         $this->attachRule(new JComponentRouterRulesMenu($this));
@@ -40,6 +43,11 @@ class RwRouter extends JComponentRouterView
                 unset($query['directionID']);
                 break;
             }
+            case 'thread': {
+                $segments[] = $query['uid'];
+                unset($query['uid']);
+                break;
+            }
             default: {
                 $segments[] = $query['id'];
             }
@@ -56,6 +64,10 @@ class RwRouter extends JComponentRouterView
         {
             case 'stations': {
                 $menu->query['directionID'] = $segments[0];
+                break;
+            }
+            case 'thread': {
+                $menu->query['uid'] = $segments[0];
                 break;
             }
             default: {
