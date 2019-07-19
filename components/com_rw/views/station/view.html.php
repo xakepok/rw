@@ -5,10 +5,11 @@ defined('_JEXEC') or die;
 
 class RwViewStation extends HtmlView
 {
-    protected $station;
+    protected $station, $device;
     public function display($tpl = null)
     {
         $this->station = $this->get('Station');
+        $this->device = (!JFactory::getApplication()->client->mobile) ? 'desktop' : 'mobile';
         $this->prepare();
         return parent::display($tpl);
     }

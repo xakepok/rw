@@ -23,9 +23,9 @@ HTMLHelper::_('stylesheet', 'com_rw/style.css', array('version' => 'auto', 'rela
     <?php echo $this->station->detour;?>
 </div>
 <?php endif;?>
-<h4><?php echo JText::sprintf('COM_RW_STATION_TITLE_RASP_ON_DATE', $this->station->rasp['date']);?></h4>
+<h4><?php echo JText::sprintf('COM_RW_STATION_TITLE_RASP_ON_DATE', JDate::getInstance($this->station->rasp['date'])->format("d.m.Y"));?></h4>
 <?php if ($this->station->rasp !== null): ?>
     <div class="container-fluid">
-        <?php echo $this->loadTemplate('rasp');?>
+        <?php echo $this->loadTemplate("rasp_{$this->device}");?>
     </div>
 <?php endif;?>
