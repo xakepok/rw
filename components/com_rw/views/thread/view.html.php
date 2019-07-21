@@ -20,6 +20,6 @@ class RwViewThread extends HtmlView
             $this->_layout = 'error';
             return;
         }
-        $this->setDocumentTitle($this->thread['number']);
+        $this->setDocumentTitle(sprintf("%s %s", $this->thread['number'], $this->thread['title']));
     }
 }

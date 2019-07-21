@@ -1,0 +1,7 @@
+.desc_worked {
+    opacity: 0.5;
+    font-size: 0.7em;
+}
+.desc_not_worked {
+    color: #1e6f1e;
+}

@@ -10,6 +10,7 @@ class RwModelThread extends BaseDatabaseModel
     {
         $this->is_mobile = (bool) JFactory::getApplication()->client->mobile;
         $this->uid = JFactory::getApplication()->input->getString('uid', null);
+        $this->date = JFactory::getApplication()->input->getString('date', JDate::getInstance()->format("Y-m-d"));
         parent::__construct($config);
     }
 
@@ -25,27 +26,114 @@ class RwModelThread extends BaseDatabaseModel
     {
         $result = array();
         if (empty($rasp)) return $result;
-        $config = JFactory::getConfig();
-        $tz = $config->get('offset');
-        $itemID = RwHelper::getMenuItemId('station');
         $result['number'] = $rasp['number'];
         $result['title'] = $rasp['title'];
         $result['stops'] = $rasp['stops'];
+        $codes = array();
+
         foreach ($result['stops'] as $i => $stop) {
-            if ($result['stops'][$i]['arrival'] != null && $result['stops'][$i]['stop_time'] != null && $result['stops'][$i]['stop_time'] !== 0) {
-                $dat_1 = JDate::getInstance($stop['arrival']);
-                $dat_1->setTimezone($tz);
-                $result['stops'][$i]['arrival'] = ($i == 0) ? '' : $dat_1->format("H.i");
+            $codes[] =  str_ireplace("s", "", $result['stops'][$i]['station']['code']);
+        }
+        $info = $this->getStationsInfo($codes);
+        $day = JDate::getInstance($this->date)->format("w");
+        $itemID = RwHelper::getMenuItemId('station');
+
+        foreach ($result['stops'] as $i => $stop) {
+            $short_title = $result['stops'][$i]['station']['short_title'];
+            $popular_title = $result['stops'][$i]['station']['popular_title'];
+            $title = $result['stops'][$i]['station']['title'];
+            $yandex =  str_ireplace("s", "", $result['stops'][$i]['station']['code']);
+            if (!$this->is_mobile) {
+                if ($popular_title !== '') $title = $popular_title;
             }
-            if ($result['stops'][$i]['departure'] != null && $result['stops'][$i]['stop_time'] != null && $result['stops'][$i]['stop_time'] !== 0) {
-                $dat_2 = JDate::getInstance($stop['departure']);
-                $dat_2->setTimezone($tz);
-                $result['stops'][$i]['departure'] = ($i != count($result['stops'])) ? $dat_2->format("H.i") : '';
-                if ($i != count($result['stops']) && $result['stops'][$i]['stop_time'] == 0) $result['stops'][$i]['departure'] = '-';
+            if ($this->is_mobile) {
+                if ($short_title != null) $title = $short_title;
+            }
+            $url = JRoute::_("index.php?option=com_rw&amp;view=station&amp;id={$info[$yandex][0]['id']}&amp;Itemid={$itemID}");
+            $result['stops'][$i]['name'] = JHtml::link($url, $title);
+            $dat_1 = JDate::getInstance($stop['arrival']);
+            $dat_2 = JDate::getInstance($stop['departure']);
+            if ($result['stops'][$i]['stop_time'] !== 0) {
+                $result['stops'][$i]['arrival'] = $dat_1->format("H.i");
+                $result['stops'][$i]['departure'] = $dat_2->format("H.i");
+                $check_time = $dat_2;
+            }
+            else
+            {
+                $result['stops'][$i]['arrival'] = '-';
+                $result['stops'][$i]['departure'] = '-';
+                $check_time = '';
+            }
+            if ($i === 0) {
+                $result['stops'][$i]['arrival'] = '';
+                $result['stops'][$i]['departure'] = $dat_2->format("H.i");
+                $check_time = $dat_2;
+            }
+            if ($i === count($result['stops'])) {
+                $result['stops'][$i]['arrival'] = $dat_1->format("H.i");
+                $result['stops'][$i]['departure'] = '';
+                $check_time = $dat_1;
+            }
+            foreach ($info[$yandex] as $item) {
+                if ($check_time == '') {
+                    $result['stops'][$i]['descs'] = ' ';
+                }
+                if (!isset($result['stops'][$i]['descs'])) {
+                    if ($item['turnstiles'] !== null) {
+                        $result['stops'][$i]['descs'] = JText::sprintf('COM_RW_HEAD_THREAD_TURNSTILES');
+                        $result['stops'][$i]['class'] = 'desc_worked';
+                        continue;
+                    }
+                    if ($item['tppd'] === '1') {
+                        $result['stops'][$i]['descs'] = JText::sprintf('COM_RW_HEAD_THREAD_TPPD');
+                        $result['stops'][$i]['class'] = 'desc_worked';
+                        continue;
+                    }
+                    if ($item['time_mask'] !== null) {
+                        if (substr($item['time_mask'], $day, 1) == '1') {
+                            if ($item['time_1'] === null && $item['time_2'] === null) {
+                                $result['stops'][$i]['descs'] = JText::sprintf('COM_RW_HEAD_THREAD_NO_DESC');
+                                $result['stops'][$i]['class'] = 'desc_not_worked';
+                                continue;
+                            } else {
+                                $open = JDate::getInstance(date("Y-m-d ") . $item['time_1']);
+                                $close = JDate::getInstance(date("Y-m-d ") . $item['time_2']);
+                                if ($open < $check_time && $close > $check_time) {
+                                    $result['stops'][$i]['descs'] = JText::sprintf('COM_RW_HEAD_THREAD_DESC_IS_WORKED');
+                                    $result['stops'][$i]['class'] = 'desc_worked';
+                                    continue;
+                                }
+                            }
+                        }
+                        continue;
+                    }
+                }
             }
         }
         return $result;
     }
 
-    private $is_mobile, $uid;
+    private function getStationsInfo(array $codes): array
+    {
+        if (empty($codes)) return array();
+        $codes = implode(", ", $codes);
+        if ($codes === '') return array();
+        $db =& $this->getDbo();
+        $query = $db->getQuery(true);
+        $query
+            ->select("i.`id`, i.`tppd`, i.`turnstiles`, i.`yandex`, i.station")
+            ->select("d.time_1, d.time_2, d.time_mask")
+            ->from("`#__rw_stations_info` i")
+            ->leftjoin("`#__rw_desc` d on d.stationID = i.id")
+            ->where("i.`yandex` in ({$codes})");
+        $items = $db->setQuery($query)->loadAssocList();
+        $result = array();
+        foreach ($items as $item) {
+            if (!isset($result[$item['yandex']])) $result[$item['yandex']] = array();
+            $result[$item['yandex']][] = $item;
+        }
+        return $result;
+    }
+
+    private $is_mobile, $uid, $date;
 }

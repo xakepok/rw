@@ -47,12 +47,13 @@ class RwModelStation extends ItemModel
     {
         $result = array();
         if (empty($rasp)) return $result;
+        $date = JFactory::getApplication()->input->getString('date', JDate::getInstance()->format('Y-m-d'));
         $config = JFactory::getConfig();
         $tz = $config->get('offset');
         $itemID = RwHelper::getMenuItemId('thread');
         foreach ($rasp as $item) {
             $arr = array();
-            $url = "index.php?option=com_rw&amp;view=thread&amp;uid={$item['thread']['uid']}";
+            $url = "index.php?option=com_rw&amp;view=thread&amp;uid={$item['thread']['uid']}&amp;date={$date}";
             if ($itemID > 0) $url .= "&amp;Itemid={$itemID}";
             $url = JRoute::_($url);
             if ($item['arrival'] !== null) {

@@ -14,6 +14,28 @@ class RwHelper
 	}
 
     /**
+     * Работает ли касса на станции в данный момент
+     * @param string $mask временная маска
+     * @param JDate $time_1 время начала работы кассы
+     * @param JDate $time_2 время конца работы кассы
+     * @return bool
+     * @since 1.0.2.6
+     */
+    static function isDescWorkedNow(string $mask, JDate $time_1, JDate $time_2): bool
+    {
+        $result = false;
+        $day = JDate::getInstance();
+        $dayOfWeek = (int) $day->format("w");
+        if (substr($mask, $dayOfWeek, 1) === '1') {
+            $open = $time_1->getTimestamp();
+            $close = $time_2->getTimestamp();
+            $now = $day->getTimestamp();
+            if ($open <= $now && $now <= $close) $result = true;
+        }
+        return $result;
+    }
+
+    /**
      * Продлевает членство в клубе определённого юзера
      * @param int $userID ID юзера
      * @since 1.0.1.8
