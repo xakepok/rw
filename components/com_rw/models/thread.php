@@ -84,6 +84,12 @@ class RwModelThread extends BaseDatabaseModel
                         $result['stops'][$i]['class'] = 'desc_worked';
                         continue;
                     }
+                    if (!RwHelper::isClub()) {
+                        $attribs = array("data-toggle" => "modal", "data-target" => "#modal_desc_ad");
+                        $result['stops'][$i]['descs'] = JHtml::link("#", JText::sprintf('COM_RW_MODAL_TITLE_DESCS'), $attribs);
+                        $result['stops'][$i]['class'] = '';
+                        continue;
+                    }
                     if ($item['tppd'] === '1') {
                         $result['stops'][$i]['descs'] = JText::sprintf('COM_RW_HEAD_THREAD_TPPD');
                         $result['stops'][$i]['class'] = 'desc_worked';

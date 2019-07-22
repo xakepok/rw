@@ -46,7 +46,7 @@ HTMLHelper::_('stylesheet', 'com_rw/style.css', array('version' => 'auto', 'rela
     </table>
 </div>
 
-<?php if ($this->isClub === false): ?>
+<?php if (!RwHelper::isClub()): ?>
     <div class="modal fade" id="modal_desc_ad" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
