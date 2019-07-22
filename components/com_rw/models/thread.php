@@ -26,8 +26,10 @@ class RwModelThread extends BaseDatabaseModel
     {
         $result = array();
         if (empty($rasp)) return $result;
-        $result['number'] = $rasp['number'];
+        $result['number'] = JText::sprintf('COM_RW_HEAD_THREAD_NUMBER', $rasp['number']);
+        $result['date'] = JText::sprintf('COM_RW_HEAD_THREAD_DATE', JDate::getInstance($this->date)->format("d.m.Y"));
         $result['title'] = $rasp['title'];
+        $result['carrier'] = $rasp['carrier']['title'];
         $result['stops'] = $rasp['stops'];
         $codes = array();
 
@@ -51,6 +53,8 @@ class RwModelThread extends BaseDatabaseModel
             }
             $url = JRoute::_("index.php?option=com_rw&amp;view=station&amp;id={$info[$yandex][0]['id']}&amp;Itemid={$itemID}");
             $result['stops'][$i]['name'] = JHtml::link($url, $title);
+            $result['stops'][$i]['zoneID'] = $info[$yandex][0]['zoneID'];
+            $result['stops'][$i]['zoneColor'] = ($info[$yandex][0]['zoneID'] % 2) ? '#8F7E0F' : 'black';
             $dat_1 = JDate::getInstance($stop['arrival']);
             $dat_2 = JDate::getInstance($stop['departure']);
             if ($result['stops'][$i]['stop_time'] !== 0) {
@@ -129,8 +133,10 @@ class RwModelThread extends BaseDatabaseModel
         $query
             ->select("i.`id`, i.`tppd`, i.`turnstiles`, i.`yandex`, i.station")
             ->select("d.time_1, d.time_2, d.time_mask")
+            ->select("dir.zoneID")
             ->from("`#__rw_stations_info` i")
             ->leftjoin("`#__rw_desc` d on d.stationID = i.id")
+            ->leftJoin("`#__rw_station_directions` dir on dir.stationID = i.id")
             ->where("i.`yandex` in ({$codes})");
         $items = $db->setQuery($query)->loadAssocList();
         $result = array();

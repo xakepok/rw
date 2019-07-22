@@ -8,11 +8,13 @@ HTMLHelper::_('stylesheet', 'com_rw/style.css', array('version' => 'auto', 'rela
 ?>
 
 <div class="row">
-    <div class="col-lg-3 text-left">
-        <h2><?php echo $this->thread['number'];?></h2>
+    <div class="col">
+        <h2><?php echo $this->thread['number'], " ", $this->thread['title'];?></h2>
     </div>
-    <div class="col-lg-9 text-right">
-        <h2><?php echo $this->thread['title'];?></h2>
+</div>
+<div class="row">
+    <div class="col">
+        <h6><?php echo $this->thread['date'];?></h6>
     </div>
 </div>
 <div>
@@ -22,6 +24,7 @@ HTMLHelper::_('stylesheet', 'com_rw/style.css', array('version' => 'auto', 'rela
                 <th><?php echo JText::sprintf('COM_RW_HEAD_THREAD_STATION');?></th>
                 <th><?php echo JText::sprintf('COM_RW_HEAD_THREAD_ARRIVAL_SHORT');?></th>
                 <th><?php echo JText::sprintf('COM_RW_HEAD_THREAD_DEPARTURE_SHORT');?></th>
+                <th><?php echo JText::sprintf('COM_RW_HEAD_THREAD_ZONE');?></th>
                 <th><?php echo JText::sprintf('COM_RW_HEAD_THREAD_DESCS');?></th>
             </tr>
         </thead>
@@ -37,6 +40,9 @@ HTMLHelper::_('stylesheet', 'com_rw/style.css', array('version' => 'auto', 'rela
                     <td>
                         <?php echo $stop['departure'];?>
                     </td>
+                    <td>
+                        <span style="color: <?php echo $stop['zoneColor'];?>; font-size: 0.8em; font-style: italic;"><?php echo $stop['zoneID'];?></span>
+                    </td>
                     <td class="<?php echo $stop['class'] ?? 'desc_not_worked';?>">
                         <?php echo (!empty($stop['descs'])) ? $stop['descs'] : JText::sprintf('COM_RW_HEAD_THREAD_DESC_IS_NOT_WORKED');?>
                     </td>
@@ -44,6 +50,9 @@ HTMLHelper::_('stylesheet', 'com_rw/style.css', array('version' => 'auto', 'rela
             <?php endforeach;?>
         </tbody>
     </table>
+</div>
+<div class="text-right">
+    <span class="font-weight-light"><?php echo $this->thread['carrier'];?></span>
 </div>
 
 <?php if (!RwHelper::isClub()): ?>
