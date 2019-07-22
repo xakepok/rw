@@ -96,8 +96,8 @@ class RwModelThread extends BaseDatabaseModel
                                 $result['stops'][$i]['class'] = 'desc_not_worked';
                                 continue;
                             } else {
-                                $open = JDate::getInstance(date("Y-m-d ") . $item['time_1']);
-                                $close = JDate::getInstance(date("Y-m-d ") . $item['time_2']);
+                                $open = JDate::getInstance($dat_1->format("Y-m-d ") . $item['time_1']);
+                                $close = JDate::getInstance($dat_2->format("Y-m-d ") . $item['time_2']);
                                 if ($open < $check_time && $close > $check_time) {
                                     $result['stops'][$i]['descs'] = JText::sprintf('COM_RW_HEAD_THREAD_DESC_IS_WORKED');
                                     $result['stops'][$i]['class'] = 'desc_worked';
