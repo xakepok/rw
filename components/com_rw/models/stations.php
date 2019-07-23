@@ -65,6 +65,27 @@ class RwModelStations extends ListModel
         return $result;
     }
 
+    public function getStationsForAjax()
+    {
+        $result = array();
+        $db =& $this->getDbo();
+        $query = $db->getQuery(true);
+        $query
+            ->select("id, station, direction")
+            ->from("`#__rw_stations_info`")
+            ->where("directionID is not null")
+            ->order("direction");
+        $items = $db->setQuery($query)->loadAssocList() ?? array();
+        if (count($items) < 1) return $result;
+        foreach ($items as $item) {
+            $arr = array();
+            $arr['value'] = $item['id'];
+            $arr['text'] = JText::sprintf("COM_RW_AJAX_SEARCH_STATION_DIRECTION", $item['station'], $item['direction']);
+            $result[] = $arr;
+        }
+        return $result;
+    }
+
     private function getDescs(array $ids = array()): array
     {
         if (empty($ids) || !RwHelper::isClub()) return array();
