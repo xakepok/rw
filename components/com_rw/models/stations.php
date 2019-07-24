@@ -71,7 +71,7 @@ class RwModelStations extends ListModel
         $db =& $this->getDbo();
         $query = $db->getQuery(true);
         $query
-            ->select("id, station, direction")
+            ->select(" distinct id, station, direction")
             ->from("`#__rw_stations_info`")
             ->where("directionID is not null")
             ->order("direction");

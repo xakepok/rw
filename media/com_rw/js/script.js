@@ -11,6 +11,9 @@ $(document).ready(function () {
         let fr = document.querySelector("select[name='from']");
         let to = document.querySelector("#rasp_to");
         if (fr !== null && to !== null) {
+            const urlParams = new URLSearchParams(window.location.search);
+            let is_from = urlParams.get('from');
+            let is_to = urlParams.get('to');
             let url = "/index.php?option=com_rw&task=rw.searchStation";
             fetch(url)
                 .then(function (response) {
@@ -43,6 +46,10 @@ $(document).ready(function () {
                         title: 'Куда',
                         showIcon: true
                     });
+                    $(fr).selectpicker('refresh');
+                    $(to).selectpicker('refresh');
+                    if (is_from !== null) $(fr).selectpicker('val', is_from);
+                    if (is_to !== null) $(to).selectpicker('val', is_to);
                     $(fr).selectpicker('refresh');
                     $(to).selectpicker('refresh');
                 });

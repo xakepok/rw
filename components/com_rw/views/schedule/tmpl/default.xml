@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_RW_MENU_SITE_DIRECTION_SCHEDULE">
+		<message>
+			<![CDATA[COM_RW_MENU_SITE_DIRECTION_SCHEDULE_DESC]]>
+		</message>
+	</layout>
+	<fieldset name="request">
+		<fields name="request">
+			<field
+					name="from"
+					type="hidden"
+					default="0"
+			/>
+			<field
+					name="to"
+					type="hidden"
+					default="0"
+			/>
+			<field
+					name="date"
+					type="hidden"
+					default=""
+			/>
+		</fields>
+	</fieldset>
+</metadata>

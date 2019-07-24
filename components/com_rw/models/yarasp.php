@@ -28,14 +28,18 @@ class RwModelYarasp extends BaseDatabaseModel
             $url = "https://api.rasp.yandex.net/v3.0/search/?" . http_build_query($data);
             $rasp = file_get_contents($url);
             $rasp = json_decode($rasp, true);
+            if ($rasp === null) {
+                $need = false;
+                return array();
+            }
             $result['threads'] = array_merge($result['threads'], $rasp['segments']);
             $data['offset'] += 100;
             if ($rasp['pagination']['total'] < ($rasp['pagination']['offset'] + $rasp['pagination']['limit'])) $need = false;
         }
-        foreach ($result['threads'] as $item) {
+        /*foreach ($result['threads'] as $item) {
             $uid = $item['thread']['uid'];
             $result['rasp'][$uid] = $this->getRaspThread($uid);
-        }
+        }*/
 
         return $result;
     }
@@ -66,6 +70,10 @@ class RwModelYarasp extends BaseDatabaseModel
             $url = "https://api.rasp.yandex.net/v3.0/schedule/?" . http_build_query($data);
             $rasp = file_get_contents($url);
             $rasp = json_decode($rasp, true);
+            if ($rasp === null) {
+                $need = false;
+                return array();
+            }
             $result['schedule'] = array_merge($result['schedule'], $rasp['schedule']);
             if (!isset($result['directions'])) $result['directions'] = $rasp['directions'];
             $data['offset'] += 100;
@@ -82,6 +90,10 @@ class RwModelYarasp extends BaseDatabaseModel
         $url = "https://api.rasp.yandex.net/v3.0/thread/?" . http_build_query($data);
         $rasp = file_get_contents($url);
         $rasp = json_decode($rasp, true);
+        if ($rasp === null) {
+            $need = false;
+            return array();
+        }
         return $rasp;
     }
 

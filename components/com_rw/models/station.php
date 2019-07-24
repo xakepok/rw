@@ -30,7 +30,7 @@ class RwModelStation extends ItemModel
             $direction = JFactory::getApplication()->input->getString('direction', $table->schedule);
             $yarasp = BaseDatabaseModel::getInstance('Yarasp', 'RwModel');
             $rasp = $yarasp->getRaspByStation($table->yandex ?? 2000000, $direction, $date);
-            $table->rasp['schedule'] = $this->prepareRasp($rasp['schedule']);
+            $table->rasp['schedule'] = $this->prepareRasp($rasp['schedule'] ?? array());
             $table->rasp['directions'] = $rasp['directions'];
             $table->rasp['direction'] = $direction;
             $table->rasp['date'] = $date;
