@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addrulepath="/administrator/components/com_rw/models/rules">
+    <fields name="filter">
+        <field
+                name="search"
+                type="text"
+                label="COM_RW_FILTER_PAYMENTS"
+                description="COM_RW_FILTER_PAYMENTS"
+                hint="COM_RW_FILTER_PAYMENTS"
+                autocomplete="off"
+                class="js-stools-search-string"
+        />
+        <field
+                name="variant"
+                type="list"
+                label="COM_RW_FILTER_SELECT_PAYMENT_VARIANT"
+                description="COM_RW_FILTER_SELECT_PAYMENT_VARIANT"
+                hint="COM_RW_FILTER_SELECT_PAYMENT_VARIANT"
+                onchange="this.form.submit();"
+                >
+            <option value="">COM_RW_FILTER_SELECT_PAYMENT_VARIANT</option>
+            <option value="0">COM_RW_PAYMENT_VARIANT_0</option>
+            <option value="1">COM_RW_PAYMENT_VARIANT_1</option>
+        </field>
+    </fields>
+    <fields name="list">
+        <field
+                name="fullordering"
+                type="list"
+                label="COM_RW_FILTER_SELECT_FULL_ORDERING"
+                description="COM_RW_FILTER_SELECT_FULL_ORDERING_DESC"
+                onchange="this.form.submit();"
+                default="p.dat DESC"
+                >
+            <option value="">JGLOBAL_SORT_BY</option>
+            <option value="p.dat ASC">COM_RW_SORT_PAYMENT_DATE_ASC</option>
+            <option value="p.dat DESC">COM_RW_SORT_PAYMENT_DATE_DESC</option>
+            <option value="p.withdraw_amount ASC">COM_RW_SORT_PAYMENT_WITHDRAW_AMOUNT_ASC</option>
+            <option value="p.withdraw_amount DESC">COM_RW_SORT_PAYMENT_WITHDRAW_AMOUNT_DESC</option>
+            <option value="p.operationID ASC">COM_RW_SORT_PAYMENT_OPERATION_ID_ASC</option>
+            <option value="p.operationID DESC">COM_RW_SORT_PAYMENT_OPERATION_ID_DESC</option>
+        </field>
+        <field
+                name="limit"
+                type="limitbox"
+                class="input-mini"
+                default="0"
+                label="COM_RW_FILTER_SELECT_LIMIT"
+                description="COM_RW_FILTER_SELECT_LIMIT_DESC"
+                onchange="this.form.submit();"
+        />
+    </fields>
+</form>

@@ -64,5 +64,4 @@ $(document).ready(function () {
     catch (e) {
         console.log('Fields not found', from, to);
     }
-
 });
