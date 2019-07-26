@@ -7,7 +7,7 @@
 	<authorUrl>http://xakepok.com</authorUrl>
 	<copyright>A copyright</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-	<version>1.0.2.8</version>
+	<version>1.0.2.9</version>
 	<description>COM_RW_XML_DESCRIPTION</description>
 
 	<!-- Scripts to run on installation -->
@@ -58,11 +58,11 @@
 		<!-- Menu entries -->
 		<menu view="rw">COM_RW</menu>
 		<submenu>
-			<!--
-				Note that all & must be escaped to &amp; for the file to be valid
-				XML and be parsed by the installer
-			-->
-			<menu link="option=com_rw">COM_RW</menu>
+			<menu link="option=com_rw&amp;view=payments">COM_RW_MENU_PAYMENTS</menu>
+			<menu link="option=com_rw&amp;view=stations">COM_RW_MENU_STATIONS</menu>
+			<menu link="option=com_rw&amp;view=directions">COM_RW_MENU_DIRECTIONS</menu>
+			<menu link="option=com_rw&amp;view=regions">COM_RW_MENU_REGIONS</menu>
+			<menu link="option=com_rw&amp;view=countries">COM_RW_MENU_COUNTRIES</menu>
 		</submenu>
 
 		<!-- Core files -->
