@@ -29,6 +29,18 @@
                 onchange="this.form.submit();"
         />
         <field
+                name="club"
+                type="list"
+                label="COM_RW_FILTER_SELECT_CLUB_EXPIRE"
+                description="COM_RW_FILTER_SELECT_CLUB_EXPIRE"
+                hint="COM_RW_FILTER_SELECT_CLUB_EXPIRE"
+                onchange="this.form.submit();"
+                >
+            <option value="">COM_RW_FILTER_SELECT_CLUB_EXPIRE</option>
+            <option value="0">COM_RW_FILTER_CLUB_EXPIRE_0</option>
+            <option value="1">COM_RW_FILTER_CLUB_EXPIRE_1</option>
+        </field>
+        <field
                 name="variant"
                 type="list"
                 label="COM_RW_FILTER_SELECT_PAYMENT_VARIANT"
@@ -63,6 +75,8 @@
             <option value="p.label DESC">COM_RW_SORT_PAYMENT_LABEL_DESC</option>
             <option value="p.operationID ASC">COM_RW_SORT_PAYMENT_OPERATION_ID_ASC</option>
             <option value="p.operationID DESC">COM_RW_SORT_PAYMENT_OPERATION_ID_DESC</option>
+            <option value="d.expire ASC">COM_RW_SORT_PAYMENT_EXPIRE_ASC</option>
+            <option value="d.expire DESC">COM_RW_SORT_PAYMENT_EXPIRE_DESC</option>
             <option value="id ASC">COM_RW_SORT_ID_ASC</option>
             <option value="id DESC">COM_RW_SORT_ID_DESC</option>
         </field>

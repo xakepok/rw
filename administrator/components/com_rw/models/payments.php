@@ -10,7 +10,7 @@ class RwModelPayments extends ListModel
         if (empty($config['filter_fields']))
         {
             $config['filter_fields'] = array(
-                'p.id', 'p.dat', 'p.amount', 'variant', 'p.amount', 'p.withdraw_amount', 'p.operationID', 'p.label', 'p.sender', 'search', 'u.name', 'dat_1', 'dat_2',
+                'p.id', 'p.dat', 'p.amount', 'variant', 'p.amount', 'p.withdraw_amount', 'p.operationID', 'p.label', 'p.sender', 'search', 'u.name', 'dat_1', 'dat_2', 'd.expire', 'club',
             );
         }
         parent::__construct($config);
@@ -23,8 +23,10 @@ class RwModelPayments extends ListModel
         $query
             ->select("p.id, p.dat, p.amount, p.withdraw_amount, p.operationID, p.label, p.variant")
             ->select("concat(u.f_name, ' ', u.l_name) as user, u.social_profile_link as `link`, u.avatar, u.region, u.city")
+            ->select("c.expire")
             ->from("`#__payments` p")
-            ->leftJoin("`#__plg_slogin_profile` u on u.user_id = p.userID");
+            ->leftJoin("`#__plg_slogin_profile` u on u.user_id = p.userID")
+            ->leftJoin("`#__rw_club` c on c.userID = p.userID");
 
         /* Фильтр */
         $search = $this->getState('filter.search');
@@ -37,6 +39,12 @@ class RwModelPayments extends ListModel
         if (is_numeric($variant)) {
             $variant = $db->q($variant);
             $query->where("`p`.`variant` = {$variant}");
+        }
+        //Фильтр по наличию абонемента
+        $club = $this->getState('filter.club');
+        if (is_numeric($club)) {
+            $operand = ($club == 1) ? ">" : "<";
+            $query->where("c.expire {$operand} current_timestamp");
         }
         //Фильтр по периоду платежа
         $dat_1 = $this->getState('filter.dat_1');
@@ -91,6 +99,8 @@ class RwModelPayments extends ListModel
             $arr['region'] = $item->region;
             $arr['city'] = $item->city;
             $arr['variant'] = JText::sprintf("COM_RW_PAYMENT_VARIANT_{$item->variant}");
+            $expire = ($item->expire !== null) ? JDate::getInstance($item->expire . "+3 hour") : JText::sprintf('COM_RW_HEAD_PAYMENT_IS_EXPIRE');
+            $arr['expire'] = $expire->format("d.m.Y H:i");
             $result['payments'][] = $arr;
             $result['sum'] += (float) $item->amount;
         }
@@ -108,6 +118,8 @@ class RwModelPayments extends ListModel
         $this->setState('filter.dat_1', $dat_1);
         $dat_2 = $this->getUserStateFromRequest($this->context . '.filter.dat_2', 'filter_dat_2');
         $this->setState('filter.dat_2', $dat_2);
+        $club = $this->getUserStateFromRequest($this->context . '.filter.club', 'filter_club');
+        $this->setState('filter.club', $club);
         parent::populateState($ordering, $direction);
     }
 
@@ -117,6 +129,7 @@ class RwModelPayments extends ListModel
         $id .= ':' . $this->getState('filter.variant');
         $id .= ':' . $this->getState('filter.dat_1');
         $id .= ':' . $this->getState('filter.dat_2');
+        $id .= ':' . $this->getState('filter.club');
         return parent::getStoreId($id);
     }
 }

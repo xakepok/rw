@@ -32,6 +32,9 @@ foreach ($this->items['payments'] as $i => $item) :
             <?php echo $item['operationID'];?>
         </td>
         <td>
+            <?php echo $item['expire'];?>
+        </td>
+        <td>
             <?php echo $item['id'];?>
         </td>
     </tr>

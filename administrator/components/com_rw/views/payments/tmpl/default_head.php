@@ -31,6 +31,9 @@ $listDirn    = $this->escape($this->state->get('list.direction'));
     <th>
         <?php echo JHtml::_('searchtools.sort', 'COM_RW_HEAD_PAYMENT_OPERATION_ID', 'p.operationID', $listDirn, $listOrder); ?>
     </th>
+    <th>
+        <?php echo JHtml::_('searchtools.sort', 'COM_RW_HEAD_PAYMENT_CLUB', 'd.expire', $listDirn, $listOrder); ?>
+    </th>
     <th style="width: 1%;">
         <?php echo JHtml::_('searchtools.sort', 'ID', 'id', $listDirn, $listOrder); ?>
     </th>
