@@ -22,6 +22,11 @@ class RwController extends BaseController
 {
     public function display($cachable = false, $urlparams = array())
     {
+        $view = $this->input->getString('view');
+        if ($view === 'rw') {
+            header("Location: index.php?option=com_rw&view=payments");
+            jexit();
+        }
         return parent::display($cachable, $urlparams);
     }
 }
