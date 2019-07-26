@@ -10,7 +10,7 @@ class RwModelPayments extends ListModel
         if (empty($config['filter_fields']))
         {
             $config['filter_fields'] = array(
-                'p.id', 'p.dat', 'p.amount', 'variant', 'p.amount', 'p.withdraw_amount', 'p.operationID', 'p.label', 'p.sender', 'search', 'u.name',
+                'p.id', 'p.dat', 'p.amount', 'variant', 'p.amount', 'p.withdraw_amount', 'p.operationID', 'p.label', 'p.sender', 'search', 'u.name', 'dat_1', 'dat_2',
             );
         }
         parent::__construct($config);
@@ -38,7 +38,18 @@ class RwModelPayments extends ListModel
             $variant = $db->q($variant);
             $query->where("`p`.`variant` = {$variant}");
         }
-
+        //Фильтр по периоду платежа
+        $dat_1 = $this->getState('filter.dat_1', date("Y-m-01"));
+        $dat_2 = $this->getState('filter.dat_2', '');
+        if ($dat_1 !== '') {
+            $dat_1 = $db->q($dat_1);
+            if ($dat_2 !== '') {
+                $dat_2 = $db->q($dat_2);
+            } else {
+                $dat_2 = $db->q(JDate::getInstance("+1 day +3 hour"));
+            }
+            $query->where("`p`.`dat` BETWEEN {$dat_1} AND {$dat_2}");
+        }
 
         /* Сортировка */
         $orderCol  = $this->state->get('list.ordering');
@@ -51,7 +62,7 @@ class RwModelPayments extends ListModel
     public function getItems()
     {
         $items = parent::getItems();
-        $result = array();
+        $result = array('payments' => array(), 'sum' => (float) 0);
         if (empty($items)) return $result;
         foreach ($items as $item) {
             $arr = array();
@@ -68,7 +79,8 @@ class RwModelPayments extends ListModel
             $arr['region'] = $item->region;
             $arr['city'] = $item->city;
             $arr['variant'] = JText::sprintf("COM_RW_PAYMENT_VARIANT_{$item->variant}");
-            $result[] = $arr;
+            $result['payments'][] = $arr;
+            $result['sum'] += (float) $item->amount;
         }
         return $result;
     }
@@ -80,6 +92,10 @@ class RwModelPayments extends ListModel
         $this->setState('filter.search', $search);
         $variant = $this->getUserStateFromRequest($this->context . '.filter.variant', 'filter_variant');
         $this->setState('filter.variant', $variant);
+        $dat_1 = $this->getUserStateFromRequest($this->context . '.filter.dat_1', 'filter_dat_1');
+        $this->setState('filter.dat_1', $dat_1);
+        $dat_2 = $this->getUserStateFromRequest($this->context . '.filter.dat_2', 'filter_dat_2');
+        $this->setState('filter.dat_2', $dat_2);
         parent::populateState($ordering, $direction);
     }
 
@@ -87,6 +103,8 @@ class RwModelPayments extends ListModel
     {
         $id .= ':' . $this->getState('filter.search');
         $id .= ':' . $this->getState('filter.variant');
+        $id .= ':' . $this->getState('filter.dat_1');
+        $id .= ':' . $this->getState('filter.dat_2');
         return parent::getStoreId($id);
     }
 }

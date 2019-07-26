@@ -35,3 +35,7 @@ $listDirn    = $this->escape($this->state->get('list.direction'));
         <?php echo JHtml::_('searchtools.sort', 'ID', 'id', $listDirn, $listOrder); ?>
     </th>
 </tr>
+<tr>
+    <th colspan="4" style="text-align: right;"><?php echo JText::sprintf('COM_RW_HEAD_PAYMENT_SUM');?></th>
+    <th colspan="6"><?php echo JText::sprintf('COM_RW_AMOUNT_RUB', $this->items['sum']);?></th>
+</tr>

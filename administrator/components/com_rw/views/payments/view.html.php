@@ -19,6 +19,7 @@ class RwViewPayments extends HtmlView
 
         // Show the toolbar
 		$this->toolbar();
+		$this->filters();
 
 		// Show the sidebar
 		$this->helper = new RwHelper();
@@ -28,6 +29,12 @@ class RwViewPayments extends HtmlView
 		// Display it all
 		return parent::display($tpl);
 	}
+
+	private function filters()
+    {
+        $this->filterForm->setFieldAttribute('dat_1', 'default', date("Y-m-01"), 'filter');
+        $this->filterForm->setFieldAttribute('dat_2', 'default', date("Y-m-d"), 'filter');
+    }
 
 	private function toolbar()
 	{

@@ -1,7 +1,7 @@
 <?php
 // Запрет прямого доступа.
 defined('_JEXEC') or die;
-foreach ($this->items as $i => $item) :
+foreach ($this->items['payments'] as $i => $item) :
     ?>
     <tr class="row0">
         <td class="center">

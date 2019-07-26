@@ -11,6 +11,24 @@
                 class="js-stools-search-string"
         />
         <field
+                name="dat_1"
+                type="calendar"
+                label="COM_RW_FILTER_SELECT_PAYMENT_DATE_1"
+                description="COM_RW_FILTER_SELECT_PAYMENT_DATE_1"
+                hint="COM_RW_FILTER_SELECT_PAYMENT_DATE_1"
+                format="%d.%m.%Y"
+                onchange="this.form.submit();"
+        />
+        <field
+                name="dat_2"
+                type="calendar"
+                label="COM_RW_FILTER_SELECT_PAYMENT_DATE_2"
+                description="COM_RW_FILTER_SELECT_PAYMENT_DATE_2"
+                hint="COM_RW_FILTER_SELECT_PAYMENT_DATE_2"
+                format="%d.%m.%Y"
+                onchange="this.form.submit();"
+        />
+        <field
                 name="variant"
                 type="list"
                 label="COM_RW_FILTER_SELECT_PAYMENT_VARIANT"
