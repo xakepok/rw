@@ -39,15 +39,27 @@ class RwModelPayments extends ListModel
             $query->where("`p`.`variant` = {$variant}");
         }
         //Фильтр по периоду платежа
-        $dat_1 = $this->getState('filter.dat_1', date("Y-m-01"));
-        $dat_2 = $this->getState('filter.dat_2', '');
-        if ($dat_1 !== '') {
-            $dat_1 = $db->q($dat_1);
-            if ($dat_2 !== '') {
-                $dat_2 = $db->q($dat_2);
-            } else {
-                $dat_2 = $db->q(JDate::getInstance("+1 day +3 hour"));
-            }
+        $dat_1 = $this->getState('filter.dat_1');
+        $dat_2 = $this->getState('filter.dat_2');
+        if ($dat_1 == '') {
+            $dat_1 = JDate::getInstance(date("Y-m-01") . "- 1 day");
+        }
+        else {
+            $dat_1 = JDate::getInstance($dat_1 . "+3 hour");
+        }
+        if ($dat_2 == '') {
+            $dat_2 = JDate::getInstance("+ 1 day +3 hour");
+        }
+        else {
+            $dat_2 = JDate::getInstance($dat_2 . "+ 3 hour");
+        }
+        if ($dat_1->format("Y-m-d") == $dat_2->format("Y-m-d")) {
+            $dat = $db->q("%{$dat_1->format("Y-m-d")}%");
+            $query->where("p.dat LIKE {$dat}");
+        }
+        else {
+            $dat_1 = $db->q($dat_1->format("Y-m-d"));
+            $dat_2 = $db->q($dat_2->format("Y-m-d"));
             $query->where("`p`.`dat` BETWEEN {$dat_1} AND {$dat_2}");
         }
 
