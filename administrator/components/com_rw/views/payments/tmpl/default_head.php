@@ -8,6 +8,9 @@ $listDirn    = $this->escape($this->state->get('list.direction'));
         <?php echo JHtml::_('grid.checkall'); ?>
     </th>
     <th>
+        <?php echo JText::sprintf('COM_RW_HEAD_PAYMENT_AVATAR'); ?>
+    </th>
+    <th>
         <?php echo JHtml::_('searchtools.sort', 'COM_RW_HEAD_PAYMENT_DATE', 'p.dat', $listDirn, $listOrder); ?>
     </th>
     <th>

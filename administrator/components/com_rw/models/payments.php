@@ -22,9 +22,9 @@ class RwModelPayments extends ListModel
         $query = $db->getQuery(true);
         $query
             ->select("p.id, p.dat, p.amount, p.withdraw_amount, p.operationID, p.label, p.variant")
-            ->select("u.name as user")
+            ->select("concat(u.f_name, ' ', u.l_name) as user, u.social_profile_link as `link`, u.avatar, u.region, u.city")
             ->from("`#__payments` p")
-            ->leftJoin("`#__users` u on u.id = p.userID");
+            ->leftJoin("`#__plg_slogin_profile` u on u.user_id = p.userID");
 
         /* Фильтр */
         $search = $this->getState('filter.search');
@@ -58,11 +58,15 @@ class RwModelPayments extends ListModel
             $dat = JDate::getInstance($item->dat);
             $arr['id'] = $item->id;
             $arr['dat'] = $dat->format("d.m.Y");
-            $arr['user'] = $item->user;
+            $arr['user'] = JHtml::link($item->link, $item->user, array('target' => '_blank'));
             $arr['amount'] = JText::sprintf('COM_RW_AMOUNT_RUB', $item->amount);
             $arr['withdraw_amount'] = JText::sprintf('COM_RW_AMOUNT_RUB', $item->withdraw_amount);
             $arr['operationID'] = $item->operationID;
+            $avatar = "images/avatar/{$item->avatar}";
+            $arr['avatar'] = JHtml::image($avatar, $item->user, array('width' => '64px'));
             $arr['label'] = $item->label;
+            $arr['region'] = $item->region;
+            $arr['city'] = $item->city;
             $arr['variant'] = JText::sprintf("COM_RW_PAYMENT_VARIANT_{$item->variant}");
             $result[] = $arr;
         }
