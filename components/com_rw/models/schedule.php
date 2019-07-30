@@ -24,6 +24,21 @@ class RwModelSchedule extends BaseDatabaseModel
         return $this->prepareRasp($schedule, $stations);
     }
 
+    public function getFrom(): int
+    {
+        return $this->from;
+    }
+
+    public function getTo(): int
+    {
+        return $this->to;
+    }
+
+    public function getDate(): string
+    {
+        return $this->date;
+    }
+
     private function prepareRasp(array $rasp, array $stations): array
     {
         $result = array('threads' => array(), 'types' => array(), 'stations' => $stations);
@@ -51,8 +66,10 @@ class RwModelSchedule extends BaseDatabaseModel
             $title = (!$this->is_mobile) ? $thread['thread']['title'] : $thread['thread']['short_title'];
             $arr['title'] = JHtml::link("index.php?option=com_rw&amp;view=thread&amp;uid={$thread['thread']['uid']}&amp;date={$thread['start_date']}&amp;Itemid={$itemID}", $title);
             $type = $thread['thread']['transport_subtype']['title'];
-            if (!isset($result['types'][$type])) $result['types'][$type] = 0;
-            $result['types'][$type]++;
+            if (!isset($result['types'][$type]['cnt'])) $result['types'][$type]['cnt'] = 0;
+            $result['types'][$type]['cnt']++;
+            $result['types'][$type]['code'] = $thread['thread']['transport_subtype']['code'];
+            $arr['code'] = $thread['thread']['transport_subtype']['code'];
             if ($thread['thread']['transport_subtype']['code'] != 'suburban') {
                 $arr['type'] = $thread['thread']['transport_subtype']['title'];
                 $arr['color'] = $thread['thread']['transport_subtype']['color'];

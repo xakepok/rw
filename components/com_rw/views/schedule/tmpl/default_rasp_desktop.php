@@ -18,7 +18,7 @@ defined('_JEXEC') or die;
         </thead>
         <tbody>
         <?php foreach ($this->schedule['threads'] as $item): ?>
-            <tr class="schedule <?php if ($item['hide']):?>d-none<?php endif;?>">
+            <tr class="schedule <?php if ($item['hide']):?>d-none<?php endif;?> thread-<?php echo $item['code'];?>">
                 <td><?php echo $item['number'];?></td>
                 <td>
                     <div><?php echo $item['departure'];?></div>
@@ -40,10 +40,10 @@ defined('_JEXEC') or die;
         </tbody>
     </table>
     <div class="row">
-        <?php foreach ($this->schedule['types'] as $type => $cnt): ?>
-            <div class="col-lg-2">
-                <button type="button" class="btn btn-primary">
-                    <?php echo $type;?> <span class="badge badge-light"><?php echo $cnt;?></span>
+        <?php foreach ($this->schedule['types'] as $type => $tip): ?>
+            <div class="col">
+                <button type="button" class="btn btn-outline-primary btn-sm" onclick="console.log('<?php echo $tip['code'];?>');">
+                    <small><?php echo $type;?> <span class="badge badge-light"><?php echo $tip['cnt'];?></span></small>
                 </button>
             </div>
         <?php endforeach;?>
