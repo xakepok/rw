@@ -5,7 +5,7 @@ $(document).ready(function () {
         const direction = urlParams.get('direction');
         let url = `${window.location.protocol}//${window.location.hostname}${window.location.pathname}?date=${this.value}`;
         if (direction !== null) url += `&direction=${direction}`;
-        window.location.href = url;
+        if (window.location.pathname.indexOf('station') !== -1) window.location.href = url;
     });
     try {
         let fr = document.querySelector("select[name='from']");
@@ -15,6 +15,7 @@ $(document).ready(function () {
             let is_from = urlParams.get('from');
             let is_to = urlParams.get('to');
             let url = "/index.php?option=com_rw&task=rw.searchStation";
+
             fetch(url)
                 .then(function (response) {
                     return response.json();
@@ -97,5 +98,20 @@ $(document).ready(function () {
     });
     $("#toggle-schedule-hide").on('click', function () {
         $('.schedule').toggleClass('d-none');
+    });
+    $(".input-group.date").datepicker({
+        todayBtn: "linked",
+        clearBtn: true,
+        language: "ru",
+        daysOfWeekHighlighted: "0,6",
+        startDate: 0,
+        calendarWeeks: true
+    });
+    $("form[name='raspSearch']").on('submit', function () {
+        let dat = document.querySelector("input[name='date']");
+        dat = dat.value.split('.');
+        dat = `${dat[2]}-${dat[1]}-${dat[0]}`;
+        document.querySelector("input[name='date']").value = dat;
+        return true;
     });
 });
