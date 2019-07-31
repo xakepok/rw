@@ -6,7 +6,7 @@ defined('_JEXEC') or die;
 </div>
 <div class="w-100 threads">
     <?php foreach ($this->schedule['threads'] as $item): ?>
-    <div class="card mb-1 w-100 p-1 thread-<?php echo $item['code'];?>">
+    <div class="schedule card mb-1 w-100 p-1 thread-<?php echo $item['code'];?> <?php if ($item['hide']):?>d-none<?php endif;?>">
         <div class="row">
             <div class="col-3 text-left">
                 <?php echo $item['departure'];?>

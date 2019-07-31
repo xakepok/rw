@@ -95,4 +95,7 @@ $(document).ready(function () {
         this.classList.add('btn-primary');
         this.classList.remove('btn-outline-primary');
     });
+    $("#toggle-schedule-hide").on('click', function () {
+        $('.schedule').toggleClass('d-none');
+    });
 });
