@@ -3,9 +3,12 @@ defined('_JEXEC') or die;
 ?>
 <div class="container-fluid">
     <div>
+        <?php echo $this->loadTemplate('rasp_desktop_types');?>
+    </div>
+    <div>
         <a href="#" onclick="$('.schedule').toggleClass('d-none'); return false;"><?php echo JText::sprintf('COM_RW_ACTION_TOGGLE_DEPARTURE');?></a>
     </div>
-    <table class="table table-sm">
+    <table class="table table-sm" id="table-schedule">
         <thead>
         <tr>
             <th><?php echo JText::sprintf('COM_RW_HEAD_RASP_THREAD_NUMBER');?></th>
@@ -39,13 +42,4 @@ defined('_JEXEC') or die;
         <?php endforeach;?>
         </tbody>
     </table>
-    <div class="row">
-        <?php foreach ($this->schedule['types'] as $type => $tip): ?>
-            <div class="col">
-                <button type="button" class="btn btn-outline-primary btn-sm" onclick="console.log('<?php echo $tip['code'];?>');">
-                    <small><?php echo $type;?> <span class="badge badge-light"><?php echo $tip['cnt'];?></span></small>
-                </button>
-            </div>
-        <?php endforeach;?>
-    </div>
 </div>

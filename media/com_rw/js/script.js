@@ -64,4 +64,35 @@ $(document).ready(function () {
     catch (e) {
         console.log('Fields not found', from, to);
     }
+    $("button[id^='switch-']").on('click', function () {
+        let val = this.id;
+        val = val.split('-');
+        val = val[1];
+        $(`#table-schedule > tbody > tr`).hide();
+        $(`#table-schedule > tbody > .thread-${val}`).show();
+        $(`div.threads > div`).hide();
+        $(`div.thread-${val}`).show();
+        let btns = document.querySelectorAll(".schedule-types > button");
+        for (let i = 0; i < btns.length; i++) {
+            if (btns[i].id !== `switch-${val}`) {
+                btns[i].classList.add('btn-outline-primary');
+                btns[i].classList.remove('btn-primary');
+            }
+        }
+        this.classList.add('btn-primary');
+        this.classList.remove('btn-outline-primary');
+        document.querySelector("button[id^='schedule_all']").classList.remove('btn-primary');
+        document.querySelector("button[id^='schedule_all']").classList.add('btn-outline-primary');
+    });
+    $("button[id^='schedule_all']").on('click', function () {
+        $(`#table-schedule > tbody > tr`).show();
+        $(`div.threads > div`).show();
+        let btns = document.querySelectorAll(".schedule-types > button");
+        for (let i = 0; i < btns.length; i++) {
+            btns[i].classList.add('btn-outline-primary');
+            btns[i].classList.remove('btn-primary');
+        }
+        this.classList.add('btn-primary');
+        this.classList.remove('btn-outline-primary');
+    });
 });

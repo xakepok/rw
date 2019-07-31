@@ -2,37 +2,17 @@
 defined('_JEXEC') or die;
 ?>
 <div class="w-100">
-    <div class="row">
-        <div class="col-xs-6 text-left">
-            <ul class="nav nav-pills">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                        <?php echo JText::sprintf('COM_RW_STATION_SELECT_DIRECTION');?>
-                    </a>
-                    <div class="dropdown-menu">
-                        <?php foreach ($this->station->rasp['directions'] as $direction): ?>
-                            <a class="dropdown-item <?php if ($direction['code'] === $this->station->rasp['direction']) echo 'active bg-success ';?>" href="<?php echo $direction['url'];?>">
-                                <?php echo $direction['title'];?>
-                            </a>
-                        <?php endforeach;?>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="col-xs-6 text-right">
-            <input type="date" value="<?php echo $this->station->rasp['date'];?>" name="date" min="<?php echo date("Y-m-d");?>" />
-        </div>
-    </div>
+    <?php echo $this->loadTemplate('rasp_mobile_types');?>
 </div>
-<div class="w-100">
-    <?php foreach ($this->station->rasp['schedule'] as $item): ?>
-    <div class="card mb-1 w-100 p-1">
+<div class="w-100 threads">
+    <?php foreach ($this->schedule['threads'] as $item): ?>
+    <div class="card mb-1 w-100 p-1 thread-<?php echo $item['code'];?>">
         <div class="row">
             <div class="col-3 text-left">
                 <?php echo $item['departure'];?>
             </div>
             <div class="col-9 text-right">
-                <?php echo $item['route'];?>
+                <?php echo $item['title'];?>
             </div>
         </div>
         <?php if ($item['platform'] != '' || $item['type'] != ''):?>
